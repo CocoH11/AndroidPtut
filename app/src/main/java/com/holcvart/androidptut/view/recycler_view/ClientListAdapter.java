@@ -9,14 +9,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Client;
+import com.holcvart.androidptut.view.fragment.ClientFragment;
 
 import java.util.List;
 
 public class ClientListAdapter extends RecyclerView.Adapter {
     private List<Client> clients;
+    private ClientFragment clientFragment;
 
-    public ClientListAdapter(List<Client> clients) {
+    public ClientListAdapter(List<Client> clients, ClientFragment clientFragment) {
         this.clients = clients;
+        this.clientFragment=clientFragment;
     }
 
     @NonNull
@@ -29,6 +32,7 @@ public class ClientListAdapter extends RecyclerView.Adapter {
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         ((ClientRecyclerViewHolder)holder).setDetails(clients.get(position));
+        ((ClientRecyclerViewHolder)holder).itemView.setOnClickListener(new ClientItemOnClickListener(position, clientFragment));
 
     }
 
@@ -42,5 +46,8 @@ public class ClientListAdapter extends RecyclerView.Adapter {
         return R.layout.client_item;
     }
 
-
+    @Override
+    public long getItemId(int position) {
+        return clients.get(position).getId();
+    }
 }

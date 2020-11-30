@@ -7,29 +7,29 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.holcvart.androidptut.ui.home.HomeFragment"
+        android:name="com.holcvart.androidptut.view.fragment.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_client"
-        android:name="com.holcvart.androidptut.ui.client.ClientFragment"
+        android:name="com.holcvart.androidptut.view.fragment.ClientFragment"
         android:label="@string/menu_client"
         tools:layout="@layout/fragment_client" />
 
     <fragment
         android:id="@+id/nav_estimate"
-        android:name="com.holcvart.androidptut.ui.estimate.EstimateFragment"
+        android:name="com.holcvart.androidptut.view.fragment.EstimateFragment"
         android:label="@string/menu_estimate"
         tools:layout="@layout/fragment_estimate" />
     <fragment
         android:id="@+id/nav_order"
-        android:name="com.holcvart.androidptut.ui.order.OrderFragment"
+        android:name="com.holcvart.androidptut.view.fragment.OrderFragment"
         android:label="@string/menu_order"
         tools:layout="@layout/order_fragment" />
     <fragment
         android:id="@+id/nav_intervention"
-        android:name="com.holcvart.androidptut.ui.intervention.InterventionFragment"
+        android:name="com.holcvart.androidptut.view.fragment.InterventionFragment"
         android:label="@string/menu_intervention"
         tools:layout="@layout/intervention_fragment" />
 </navigation>

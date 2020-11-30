@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.holcvart.androidptut.model.entity.Client;
+import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.repository.ClientRepository;
 
 import java.util.List;

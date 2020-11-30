@@ -6,15 +6,15 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.holcvart.androidptut.model.database.PhoneRepairManagementContract;
 import com.holcvart.androidptut.model.entity.Client;
+import com.holcvart.androidptut.model.entity.Entity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientRepository {
-    private final SQLiteDatabase database;
+public class ClientRepository extends EntityRepository{
 
     public ClientRepository(SQLiteDatabase database) {
-        this.database = database;
+        super(database);
     }
 
     public void insert(Client client){

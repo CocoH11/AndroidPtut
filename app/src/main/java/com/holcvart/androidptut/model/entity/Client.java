@@ -1,14 +1,15 @@
 package com.holcvart.androidptut.model.entity;
 
-public class Client {
-    private long id;
+public class Client extends Entity {
     private String firstName;
     private String name;
     private String email;
     private String phone;
     private String address;
 
-    public Client(){}
+    public Client(){
+        super();
+    }
 
     public Client(String firstName, String name, String email, String phone, String address) {
         this();
@@ -23,14 +24,6 @@ public class Client {
     public Client(long id, String firstName, String name, String email, String phone, String address){
         this(firstName, name, email, phone, address);
         this.id=id;
-    }
-
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
     }
 
     public String getFirstName() {

@@ -1,4 +1,4 @@
-package com.holcvart.androidptut.ui.order;
+package com.holcvart.androidptut.view.fragment;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.holcvart.androidptut.R;
+import com.holcvart.androidptut.view.model.OrderViewModel;
 
 public class OrderFragment extends Fragment {
 

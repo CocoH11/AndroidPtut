@@ -1,4 +1,4 @@
-package com.holcvart.androidptut.ui.home;
+package com.holcvart.androidptut.view.model;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;

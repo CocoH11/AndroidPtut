@@ -1,16 +1,16 @@
-package com.holcvart.androidptut.ui.client;
+package com.holcvart.androidptut.view.model;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class ClientViewModel extends ViewModel {
+public class EstimateViewModel extends ViewModel {
 
     private MutableLiveData<String> mText;
 
-    public ClientViewModel() {
+    public EstimateViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+        mText.setValue("This is slideshow fragment");
     }
 
     public LiveData<String> getText() {

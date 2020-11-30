@@ -1,4 +1,4 @@
-package com.holcvart.androidptut.ui.intervention;
+package com.holcvart.androidptut.view.model;
 
 import androidx.lifecycle.ViewModel;
 

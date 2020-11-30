@@ -1,4 +1,4 @@
-package com.holcvart.androidptut.ui.intervention;
+package com.holcvart.androidptut.view.fragment;
 
 import androidx.lifecycle.ViewModelProvider;
 
@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.holcvart.androidptut.R;
+import com.holcvart.androidptut.view.model.InterventionViewModel;
 
 public class InterventionFragment extends Fragment {
 

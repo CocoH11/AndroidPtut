@@ -1,4 +1,4 @@
-package com.holcvart.androidptut.ui.order;
+package com.holcvart.androidptut.view.model;
 
 import androidx.lifecycle.ViewModel;
 

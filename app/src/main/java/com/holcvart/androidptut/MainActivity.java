@@ -1,5 +1,6 @@
 package com.holcvart.androidptut;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
@@ -7,6 +8,9 @@ import android.view.Menu;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
+import com.holcvart.androidptut.model.database.PhoneRepairManagementDBHelper;
+import com.holcvart.androidptut.model.entity.Client;
+import com.holcvart.androidptut.model.repository.ClientRepository;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -19,10 +23,12 @@ import androidx.appcompat.widget.Toolbar;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    private SQLiteDatabase database;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.database= new PhoneRepairManagementDBHelper(getBaseContext()).getWritableDatabase();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -59,5 +65,20 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public SQLiteDatabase getDatabase() {
+        return database;
+    }
+
+    //method to fill the database when the device memory has been wiped out
+    public void fillDatabase(){
+        Client client1= new Client("Corentin", "Holcvart", "corentin.holcvart@hotmail.fr", "0770447108", "adresse");
+        Client client2= new Client("Nicolas", "Boehrer", "nicolas.boehrer@edu.univ-fcomte.fr", "1234567", "je sais plus");
+        Client client3= new Client("Youssef", "Raïss", "youssef.raiss@edu.univ-fcomte.fr", "2345678", "je sais pas");
+        ClientRepository repository= new ClientRepository(database);
+        repository.insert(client1);
+        repository.insert(client2);
+        repository.insert(client3);
     }
 }

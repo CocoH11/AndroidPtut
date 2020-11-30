@@ -27,7 +27,7 @@ public class ClientRepository extends EntityRepository{
         client.setId(database.insert(PhoneRepairManagementContract.Client.TABLE_NAME, null, values));
     }
 
-    public Client findOneById(int id){
+    public Client findOneById(long id){
         String selection = PhoneRepairManagementContract.Client._ID + " = ?";
         String[] selectionArgs = { String.valueOf(id) };
         Cursor cursor=database.query

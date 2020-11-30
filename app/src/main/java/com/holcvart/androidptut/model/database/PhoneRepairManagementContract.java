@@ -19,11 +19,11 @@ public final class PhoneRepairManagementContract {
         public static final String SQL_CREATE_TABLE =
                 "CREATE TABLE "+TABLE_NAME+"("+
                         _ID + " INTEGER PRIMARY KEY," +
-                        COLUMN_NAME_NAME + "TEXT," +
-                        COLUMN_NAME_FIRST_NAME + "TEXT," +
-                        COLUMN_NAME_EMAIL + "TEXT," +
-                        COLUMN_NAME_PHONE + "TEXT," +
-                        COLUMN_NAME_ADDRESS + "TEXT);"
+                        COLUMN_NAME_NAME + " TEXT," +
+                        COLUMN_NAME_FIRST_NAME + " TEXT," +
+                        COLUMN_NAME_EMAIL + " TEXT," +
+                        COLUMN_NAME_PHONE + " TEXT," +
+                        COLUMN_NAME_ADDRESS + " TEXT);"
                 ;
 
         public static final String SQL_DELETE_TABLE =

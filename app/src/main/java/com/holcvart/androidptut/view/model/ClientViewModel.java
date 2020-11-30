@@ -4,16 +4,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.holcvart.androidptut.model.entity.Client;
+import com.holcvart.androidptut.model.repository.ClientRepository;
+
+import java.util.List;
+
 public class ClientViewModel extends ViewModel {
+    private ClientRepository clientRepository;
 
-    private MutableLiveData<String> mText;
-
-    public ClientViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is gallery fragment");
+    public ClientViewModel(ClientRepository clientRepository) {
+        this.clientRepository=clientRepository;
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public List<Client> findAll(){
+        return clientRepository.findAll();
     }
 }

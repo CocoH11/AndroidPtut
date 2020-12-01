@@ -68,11 +68,9 @@ public class InterventionRepository extends EntityRepository{
         intervention.setDate(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Intervention.COLUMN_NAME_DATE)));
         intervention.setDescription(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION)));
         int isValidInt=cursor.getInt(cursor.getColumnIndex(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID));
-        if (isValidInt==0)intervention.setValid(false);
-        else intervention.setValid(true);
+        intervention.setValid(isValidInt != 0);
         int isBilledInt=cursor.getInt(cursor.getColumnIndex(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED));
-        if (isValidInt==0)intervention.setBilled(false);
-        else intervention.setBilled(true);
+        intervention.setBilled(isBilledInt != 0);
         return intervention;
 
     }

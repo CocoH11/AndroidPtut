@@ -12,18 +12,16 @@ public class Client extends Entity {
     }
 
     public Client(String firstName, String name, String email, String phone, String address) {
-        this();
-        this.firstName = firstName;
-        this.name = name;
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.id=-1;
+        this(-1, firstName, name, email, phone, address);
     }
 
     public Client(long id, String firstName, String name, String email, String phone, String address){
-        this(firstName, name, email, phone, address);
-        this.id=id;
+        super(id);
+        this.firstName=firstName;
+        this.name=name;
+        this.email=email;
+        this.phone=phone;
+        this.address=address;
     }
 
     public String getFirstName() {

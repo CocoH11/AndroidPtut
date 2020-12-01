@@ -12,4 +12,7 @@
     <string name="menu_estimate">Devis</string>
     <string name="menu_intervention">Intervention</string>
     <string name="menu_order">Commande</string>
+
+    <string name="button_phone_call_text">Appeler</string>
+    <string name="button_email_send_text">Envoyer un email</string>
 </resources>

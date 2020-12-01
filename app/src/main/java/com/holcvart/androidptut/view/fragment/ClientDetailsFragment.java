@@ -1,10 +1,13 @@
 package com.holcvart.androidptut.view.fragment;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -29,6 +32,8 @@ public class ClientDetailsFragment extends Fragment {
     private TextView textViewEmail;
     private TextView textViewPhone;
     private TextView textViewAddress;
+    private Button buttonPhoneCall;
+    private Button buttonEmailSend;
 
     @Nullable
     @Override
@@ -46,11 +51,38 @@ public class ClientDetailsFragment extends Fragment {
         textViewEmail=(TextView)view.findViewById(R.id.textViewClientEmail);
         textViewPhone=(TextView)view.findViewById(R.id.textViewClientPhone);
         textViewAddress=(TextView)view.findViewById(R.id.textViewClientAddress);
+        buttonPhoneCall=(Button)view.findViewById(R.id.buttonPhoneCall);
+        buttonEmailSend=(Button)view.findViewById(R.id.buttonEmailSend);
         Client client = clientDetailViewModel.findOneById(getArguments().getLong("clientId"));
         textViewFirstName.setText(client.getFirstName());
         textViewName.setText(client.getName());
         textViewEmail.setText(client.getEmail());
         textViewPhone.setText(client.getPhone());
         textViewAddress.setText(client.getAddress());
+
+        buttonPhoneCall.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String phoneNumber=textViewPhone.getText().toString();
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:" + phoneNumber));
+                startActivity(intent);
+            }
+        });
+
+        buttonEmailSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String[] addresses=new String[]{textViewEmail.getText().toString()};
+                String subject= "subject";
+                Intent intent = new Intent(Intent.ACTION_SENDTO);
+                intent.setData(Uri.parse("mailto:")); // only email apps should handle this
+                intent.putExtra(Intent.EXTRA_EMAIL, addresses);
+                intent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                if (intent.resolveActivity(requireActivity().getPackageManager()) != null) {
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }

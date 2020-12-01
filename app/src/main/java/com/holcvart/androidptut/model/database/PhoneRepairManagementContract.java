@@ -38,7 +38,7 @@ public final class PhoneRepairManagementContract {
         public final static String COLUMN_NAME_DATE="date";
         public final static String COLUMN_NAME_DESCRIPTION="description";
         public final static String COLUMN_NAME_IS_VALID="isValid";
-        public final static String COLUMN_NAME_IS_PAID="isPaid";
+        public final static String COLUMN_NAME_IS_BILLED="isBilled";
 
         public static final String SQL_CREATE_TABLE =
                 "CREATE TABLE "+TABLE_NAME+"("+
@@ -46,7 +46,7 @@ public final class PhoneRepairManagementContract {
                         COLUMN_NAME_TITLE + " TEXT," +
                         COLUMN_NAME_DATE + " TEXT," +
                         COLUMN_NAME_DESCRIPTION + " TEXT," +
-                        COLUMN_NAME_IS_PAID + " INTEGER," +
+                        COLUMN_NAME_IS_BILLED + " INTEGER," +
                         COLUMN_NAME_IS_VALID + " INTEGER);"
                 ;
 

@@ -6,22 +6,24 @@ public class Intervention extends Entity{
     private String description;
     private boolean isValid;
     private boolean isBilled;
+    private Client client;
 
     public Intervention(){
         super();
     }
 
-    public Intervention(String title, String date, String description, boolean isValid, boolean isBilled) {
-        this(-1, title, date, description, isValid, isBilled);
+    public Intervention(String title, String date, String description, boolean isValid, boolean isBilled, Client client) {
+        this(-1, title, date, description, isValid, isBilled, client);
     }
 
-    public Intervention(long id, String title, String date, String description, boolean isValid, boolean isBilled){
+    public Intervention(long id, String title, String date, String description, boolean isValid, boolean isBilled, Client client){
         super(id);
         this.title=title;
         this.date=date;
         this.description=description;
         this.isValid=isValid;
         this.isBilled=isBilled;
+        this.client=client;
     }
 
     public String getTitle() {
@@ -62,5 +64,13 @@ public class Intervention extends Entity{
 
     public void setBilled(boolean billed) {
         isBilled = billed;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

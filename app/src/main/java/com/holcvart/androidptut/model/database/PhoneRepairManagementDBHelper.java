@@ -20,7 +20,7 @@ public class PhoneRepairManagementDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(PhoneRepairManagementContract.Client.SQL_DELETE_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Intervention.SQL_DELETE_TABLE);
         db.execSQL(PhoneRepairManagementContract.Client.SQL_DELETE_TABLE);
         onCreate(db);
     }

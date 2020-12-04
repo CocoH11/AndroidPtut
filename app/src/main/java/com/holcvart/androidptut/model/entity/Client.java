@@ -1,14 +1,19 @@
 package com.holcvart.androidptut.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Client extends Entity {
     private String firstName;
     private String name;
     private String email;
     private String phone;
     private String address;
+    private List<Intervention> interventions;
 
     public Client(){
         super();
+        interventions= new ArrayList<>();
     }
 
     public Client(String firstName, String name, String email, String phone, String address) {
@@ -22,6 +27,7 @@ public class Client extends Entity {
         this.email=email;
         this.phone=phone;
         this.address=address;
+        interventions= new ArrayList<>();
     }
 
     public String getFirstName() {
@@ -62,5 +68,18 @@ public class Client extends Entity {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<Intervention> getInterventions() {
+        return interventions;
+    }
+
+    public void setInterventions(List<Intervention> interventions) {
+        this.interventions = interventions;
+    }
+
+    public void addInterventions(Intervention intervention){
+        interventions.add(intervention);
+        if(intervention.getClient()!=null)intervention.setClient(this);
     }
 }

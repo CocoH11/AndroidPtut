@@ -12,6 +12,10 @@ public class Intervention extends Entity{
         super();
     }
 
+    public Intervention(String title, String date, String description, boolean isValid, boolean isBilled){
+        this(title, date, description, isValid, isBilled, null);
+    }
+
     public Intervention(String title, String date, String description, boolean isValid, boolean isBilled, Client client) {
         this(-1, title, date, description, isValid, isBilled, client);
     }
@@ -24,6 +28,8 @@ public class Intervention extends Entity{
         this.isValid=isValid;
         this.isBilled=isBilled;
         this.client=client;
+        if (client !=null && !client.getInterventions().contains(this))
+        client.addInterventions(this);
     }
 
     public String getTitle() {
@@ -72,5 +78,7 @@ public class Intervention extends Entity{
 
     public void setClient(Client client) {
         this.client = client;
+        if (!client.getInterventions().contains(this))this.client.addInterventions(this);
     }
+
 }

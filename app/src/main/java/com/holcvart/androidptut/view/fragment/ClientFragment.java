@@ -1,16 +1,12 @@
 package com.holcvart.androidptut.view.fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,6 +40,6 @@ public class ClientFragment extends Fragment {
         long id= Long.parseLong(String.valueOf(recyclerView.getAdapter().getItemId(position)));
         Bundle bundle = new Bundle();
         bundle.putLong("clientId", id);
-        Navigation.findNavController(view).navigate(R.id.action_nav_client_to_clientDetailsFragment, bundle);
+        Navigation.findNavController(view).navigate(R.id.action_nav_client_to_nav_client_details, bundle);
     }
 }

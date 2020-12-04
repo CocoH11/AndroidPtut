@@ -13,6 +13,8 @@ public class ClientDetailViewModel extends ViewModel {
     }
 
     public Client findOneById(long id){
-        return clientRepository.findOneById(id);
+        Client client = new Client();
+        clientRepository.findOneById(id, client);
+        return client;
     }
 }

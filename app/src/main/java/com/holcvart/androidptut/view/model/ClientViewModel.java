@@ -8,6 +8,7 @@ import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.repository.ClientRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClientViewModel extends ViewModel {
@@ -17,7 +18,9 @@ public class ClientViewModel extends ViewModel {
         this.clientRepository=clientRepository;
     }
 
-    public List<Client> findAll(){
-        return clientRepository.findAll();
+    public List<Entity> findAll(){
+        List<Entity> clients= new ArrayList<>();
+        clientRepository.findAll(clients);
+        return clients;
     }
 }

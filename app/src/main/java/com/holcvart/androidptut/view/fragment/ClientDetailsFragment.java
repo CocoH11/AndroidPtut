@@ -34,6 +34,7 @@ public class ClientDetailsFragment extends Fragment {
     private TextView textViewAddress;
     private Button buttonPhoneCall;
     private Button buttonEmailSend;
+    private Button buttonGetEstimates;
 
     @Nullable
     @Override
@@ -53,6 +54,8 @@ public class ClientDetailsFragment extends Fragment {
         textViewAddress=(TextView)view.findViewById(R.id.textViewClientAddress);
         buttonPhoneCall=(Button)view.findViewById(R.id.buttonPhoneCall);
         buttonEmailSend=(Button)view.findViewById(R.id.buttonEmailSend);
+        buttonGetEstimates=(Button)view.findViewById(R.id.buttonGetEstimates);
+
         Client client = clientDetailViewModel.findOneById(getArguments().getLong("clientId"));
         textViewFirstName.setText(client.getFirstName());
         textViewName.setText(client.getName());
@@ -82,6 +85,13 @@ public class ClientDetailsFragment extends Fragment {
                 if (intent.resolveActivity(requireActivity().getPackageManager()) != null) {
                     startActivity(intent);
                 }
+            }
+        });
+
+        buttonGetEstimates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }

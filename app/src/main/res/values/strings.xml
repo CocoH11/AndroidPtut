@@ -15,4 +15,5 @@
 
     <string name="button_phone_call_text">Appeler</string>
     <string name="button_email_send_text">Envoyer un email</string>
+    <string name="button_get_estimates_text">Devis en cours</string>
 </resources>

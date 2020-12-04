@@ -38,8 +38,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         //testClientEntity();
         this.database= new PhoneRepairManagementDBHelper(getBaseContext()).getWritableDatabase();
-        //emptyDatabase();
-        //fillDatabase();
+        emptyDatabase();
+        fillDatabase();
         //fillDatabaseWithInterventions();
         //findInterventionsFromDatabase();
         setContentView(R.layout.activity_main);
@@ -90,10 +90,12 @@ public class MainActivity extends AppCompatActivity {
         Client client2= new Client("Nicolas", "Boehrer", "nicolas.boehrer@edu.univ-fcomte.fr", "1234567", "je sais plus");
         Client client3= new Client("Youssef", "Raïss", "youssef.raiss@edu.univ-fcomte.fr", "2345678", "je sais pas");
         ClientRepository repository= new ClientRepository(database);
+        InterventionRepository interventionRepository= new InterventionRepository(database);
+        repository.setInterventionRepository(interventionRepository);
+        interventionRepository.setClientRepository(repository);
         repository.insert(client1);
         repository.insert(client2);
         repository.insert(client3);
-        InterventionRepository interventionRepository= new InterventionRepository(database);
         Client newClient= new Client("nouveau", "nouveau", "nouveau", "0770447108", "address");
         Intervention intervention1= new Intervention("Intervention1", "11-11-2000", "description", false, false, newClient);
 
@@ -108,9 +110,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void emptyDatabase(){
         ClientRepository clientRepository= new ClientRepository(database);
-        InterventionRepository interventionRepository= new InterventionRepository(database);
+        InterventionRepository interventionRepository = new InterventionRepository(database);
+        clientRepository.setInterventionRepository(interventionRepository);
+        interventionRepository.setClientRepository(clientRepository);
         clientRepository.deleteAll();
-        interventionRepository.deleteAll();
     }
 
     public void findInterventionsFromDatabase(){

@@ -18,7 +18,6 @@ public class ClientRepository extends EntityRepository{
     private InterventionRepository interventionRepository;
     public ClientRepository(SQLiteDatabase database) {
         super(database);
-        interventionRepository= new InterventionRepository(database);
     }
 
     public void insert(Entity entity){
@@ -109,5 +108,9 @@ public class ClientRepository extends EntityRepository{
         client.setEmail(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_EMAIL)));
         client.setPhone(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_PHONE)));
         client.setAddress(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_ADDRESS)));
+    }
+
+    public void setInterventionRepository(InterventionRepository interventionRepository) {
+        this.interventionRepository = interventionRepository;
     }
 }

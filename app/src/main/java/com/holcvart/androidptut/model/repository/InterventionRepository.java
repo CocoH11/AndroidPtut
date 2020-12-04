@@ -19,7 +19,6 @@ public class InterventionRepository extends EntityRepository{
 
     public InterventionRepository(SQLiteDatabase database) {
         super(database);
-        clientRepository = new ClientRepository(database);
     }
 
     @Override
@@ -94,5 +93,9 @@ public class InterventionRepository extends EntityRepository{
         Client client= new Client();
         clientRepository.createClient(cursor, client);
         intervention.setClient(client);
+    }
+
+    public void setClientRepository(ClientRepository clientRepository) {
+        this.clientRepository = clientRepository;
     }
 }

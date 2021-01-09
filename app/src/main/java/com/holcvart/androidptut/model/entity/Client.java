@@ -30,6 +30,16 @@ public class Client extends Entity {
         interventions= new ArrayList<>();
     }
 
+    public Client(long id, String firstName, String name, String email, String phone, String address, List<Intervention> interventions){
+        super(id);
+        this.firstName=firstName;
+        this.name=name;
+        this.email=email;
+        this.phone=phone;
+        this.address=address;
+        this.interventions=interventions;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -80,6 +90,6 @@ public class Client extends Entity {
 
     public void addInterventions(Intervention intervention){
         interventions.add(intervention);
-        if(intervention.getClient()!=null)intervention.setClient(this);
+        intervention.setClient(this);
     }
 }

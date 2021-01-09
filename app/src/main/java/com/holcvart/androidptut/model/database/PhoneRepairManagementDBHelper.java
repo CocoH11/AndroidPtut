@@ -16,13 +16,27 @@ public class PhoneRepairManagementDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(PhoneRepairManagementContract.Client.SQL_CREATE_TABLE);
         db.execSQL(PhoneRepairManagementContract.Intervention.SQL_CREATE_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Part.SQL_CREATE_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Provider.SQL_CREATE_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Deal.SQL_CREATE_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Need.SQL_CREATE_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Store.SQL_CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(PhoneRepairManagementContract.Intervention.SQL_DELETE_TABLE);
-        db.execSQL(PhoneRepairManagementContract.Client.SQL_DELETE_TABLE);
+        dropTables(db);
         onCreate(db);
+    }
+
+    public void dropTables(SQLiteDatabase db){
+        db.execSQL(PhoneRepairManagementContract.Store.SQL_DROP_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Need.SQL_DROP_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Deal.SQL_DROP_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Provider.SQL_DROP_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Part.SQL_DROP_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Intervention.SQL_DROP_TABLE);
+        db.execSQL(PhoneRepairManagementContract.Client.SQL_DROP_TABLE);
     }
 
 }

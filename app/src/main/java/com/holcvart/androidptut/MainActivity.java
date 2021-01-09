@@ -13,6 +13,7 @@ import com.holcvart.androidptut.model.database.PhoneRepairManagementDBHelper;
 import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.entity.Intervention;
+import com.holcvart.androidptut.model.entity.Part;
 import com.holcvart.androidptut.model.repository.ClientRepository;
 import com.holcvart.androidptut.model.repository.InterventionRepository;
 
@@ -32,16 +33,15 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private SQLiteDatabase database;
+    private DatabaseTest databaseTest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //testClientEntity();
         this.database= new PhoneRepairManagementDBHelper(getBaseContext()).getWritableDatabase();
-        emptyDatabase();
-        fillDatabase();
-        //fillDatabaseWithInterventions();
-        //findInterventionsFromDatabase();
+        databaseTest = new DatabaseTest(getBaseContext());
+        databaseTest.refreshDatabase();
+        databaseTest.fillDatabase();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -82,75 +82,5 @@ public class MainActivity extends AppCompatActivity {
 
     public SQLiteDatabase getDatabase() {
         return database;
-    }
-
-    //method to fill the database when the device memory has been wiped out
-    public void fillDatabase(){
-        Client client1= new Client("Corentin", "Holcvart", "corentin.holcvart@hotmail.fr", "0770447108", "adresse");
-        Client client2= new Client("Nicolas", "Boehrer", "nicolas.boehrer@edu.univ-fcomte.fr", "1234567", "je sais plus");
-        Client client3= new Client("Youssef", "Raïss", "youssef.raiss@edu.univ-fcomte.fr", "2345678", "je sais pas");
-        ClientRepository repository= new ClientRepository(database);
-        InterventionRepository interventionRepository= new InterventionRepository(database);
-        repository.setInterventionRepository(interventionRepository);
-        interventionRepository.setClientRepository(repository);
-        repository.insert(client1);
-        repository.insert(client2);
-        repository.insert(client3);
-        Client newClient= new Client("nouveau", "nouveau", "nouveau", "0770447108", "address");
-        Intervention intervention1= new Intervention("Intervention1", "11-11-2000", "description", false, false, newClient);
-
-        Intervention intervention2= new Intervention("Intervention2", "11-11-2000", "description", false, false, client1);
-        interventionRepository.insert(intervention1);
-        interventionRepository.insert(intervention2);
-
-        Log.d("clientIntervention", intervention1.getClient().getInterventions().get(0).getTitle());
-        Log.d("clientIntervention2", String.valueOf(intervention2.getClient().getId()));
-        Log.d("clientIntervention2", intervention2.getClient().getName());
-    }
-
-    public void emptyDatabase(){
-        ClientRepository clientRepository= new ClientRepository(database);
-        InterventionRepository interventionRepository = new InterventionRepository(database);
-        clientRepository.setInterventionRepository(interventionRepository);
-        interventionRepository.setClientRepository(clientRepository);
-        clientRepository.deleteAll();
-    }
-
-    public void findInterventionsFromDatabase(){
-        InterventionRepository interventionRepository= new InterventionRepository(database);
-        List<Entity> entities=  new ArrayList<>();
-        interventionRepository.findAll(entities);
-        for (Entity entity:entities) {
-            Intervention intervention= (Intervention)entity;
-            Log.d("Intervention"+intervention.getId(), String.valueOf(intervention.getId()));
-            Log.d("Intervention"+intervention.getId(), intervention.getTitle());
-            Log.d("Intervention"+intervention.getId(), intervention.getDate());
-            Log.d("Intervention"+intervention.getId(), intervention.getDescription());
-            Log.d("Intervention"+intervention.getId(), intervention.getClient().getName());
-        }
-    }
-
-    public void testClientEntity(){
-        System.out.println("hhelllokoooaihigfkhzgvedfjhgzved");
-        Client client1 = new Client("Corentin", "Holcvart", "corentin.holcvart@hotmail.fr", "0770447108", "address");
-        Client client2 = new Client("Nicolas", "Boehrer", "nicolas.boehrer@edu.univ-fcomte.fr", "123456789", "addressNico");
-
-        Intervention interventionClient1 = new Intervention("title", "date", "description", false, false, client1);
-        Intervention interventionClient2 = new Intervention("title2", "date", "description", false, false);
-
-        Log.d("client1", client1.getName());
-        Log.d("client1", client1.getInterventions().get(0).getTitle());
-        Log.d("client1Intervention", interventionClient1.getTitle());
-
-        client2.addInterventions(interventionClient2);
-
-        Log.d("client2", client2.getName());
-        Log.d("client2", client2.getInterventions().get(0).getTitle());
-        Log.d("client2Intervention", interventionClient2.getTitle());
-
-
-
-
-
     }
 }

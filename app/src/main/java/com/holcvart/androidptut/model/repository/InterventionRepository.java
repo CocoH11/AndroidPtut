@@ -9,8 +9,10 @@ import com.holcvart.androidptut.model.database.PhoneRepairManagementContract;
 import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.entity.Intervention;
+import com.holcvart.androidptut.model.entity.PartsNeeded;
 
 import java.util.List;
+import java.util.Random;
 
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_ID_CLIENT;
 
@@ -30,9 +32,15 @@ public class InterventionRepository extends EntityRepository{
         values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION, intervention.getDescription());
         values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID, intervention.isValid());
         values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED, intervention.isBilled());
-        if (intervention.getClient().getId()==-1)clientRepository.insert(intervention.getClient());
-        values.put(COLUMN_NAME_ID_CLIENT, intervention.getClient().getId());
         intervention.setId(database.insert(PhoneRepairManagementContract.Intervention.TABLE_NAME, null, values));
+
+        for (PartsNeeded partsNeeded:intervention.getPartsNeededs()) {
+            ContentValues partValues = new ContentValues();
+            partValues.put(PhoneRepairManagementContract.Need.COLUMN_NAME_QUANTITY, partsNeeded.getQuantity());
+            partValues.put(PhoneRepairManagementContract.Need.COLUMN_NAME_ID_INTERVENTION, intervention.getId());
+            partsNeeded.setId(database.insert(PhoneRepairManagementContract.Need.TABLE_NAME, null, partValues));
+            partsNeeded.setIntervention(intervention);
+        }
     }
 
     @Override

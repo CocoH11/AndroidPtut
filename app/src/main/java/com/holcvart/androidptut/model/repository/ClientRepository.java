@@ -29,9 +29,6 @@ public class ClientRepository extends EntityRepository{
         values.put(PhoneRepairManagementContract.Client.COLUMN_NAME_PHONE, client.getPhone());
         values.put(PhoneRepairManagementContract.Client.COLUMN_NAME_ADDRESS, client.getAddress());
         client.setId(database.insert(PhoneRepairManagementContract.Client.TABLE_NAME, null, values));
-        for (Intervention intervention:client.getInterventions()) {
-            interventionRepository.insert(intervention);
-        }
     }
 
     public void findOneById(long id, Entity entity){

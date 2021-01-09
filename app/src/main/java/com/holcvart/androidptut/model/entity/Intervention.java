@@ -1,5 +1,8 @@
 package com.holcvart.androidptut.model.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Intervention extends Entity{
     private String title;
     private String date;
@@ -7,20 +10,21 @@ public class Intervention extends Entity{
     private boolean isValid;
     private boolean isBilled;
     private Client client;
+    private List<PartsNeeded> partsNeededs;
 
     public Intervention(){
         super();
     }
 
     public Intervention(String title, String date, String description, boolean isValid, boolean isBilled){
-        this(title, date, description, isValid, isBilled, null);
+        this(title, date, description, isValid, isBilled, null, new ArrayList<PartsNeeded>());
     }
 
-    public Intervention(String title, String date, String description, boolean isValid, boolean isBilled, Client client) {
-        this(-1, title, date, description, isValid, isBilled, client);
+    public Intervention(String title, String date, String description, boolean isValid, boolean isBilled, Client client, List<PartsNeeded> partsNeededs) {
+        this(-1, title, date, description, isValid, isBilled, client, partsNeededs);
     }
 
-    public Intervention(long id, String title, String date, String description, boolean isValid, boolean isBilled, Client client){
+    public Intervention(long id, String title, String date, String description, boolean isValid, boolean isBilled, Client client, List<PartsNeeded> partsNeededs){
         super(id);
         this.title=title;
         this.date=date;
@@ -28,8 +32,7 @@ public class Intervention extends Entity{
         this.isValid=isValid;
         this.isBilled=isBilled;
         this.client=client;
-        if (client !=null && !client.getInterventions().contains(this))
-        client.addInterventions(this);
+        this.partsNeededs=partsNeededs;
     }
 
     public String getTitle() {
@@ -78,7 +81,17 @@ public class Intervention extends Entity{
 
     public void setClient(Client client) {
         this.client = client;
-        if (!client.getInterventions().contains(this))this.client.addInterventions(this);
     }
 
+    public List<PartsNeeded> getPartsNeededs() {
+        return partsNeededs;
+    }
+
+    public void setPartsNeededs(List<PartsNeeded> partsNeededs) {
+        this.partsNeededs = partsNeededs;
+    }
+
+    public void addPartsNeededs(int quantity, Part part){
+        partsNeededs.add(new PartsNeeded(quantity, part));
+    }
 }

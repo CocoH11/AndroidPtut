@@ -35,7 +35,11 @@
         android:id="@+id/nav_intervention"
         android:name="com.holcvart.androidptut.view.fragment.InterventionFragment"
         android:label="@string/menu_intervention"
-        tools:layout="@layout/intervention_fragment" />
+        tools:layout="@layout/intervention_fragment" >
+        <action
+            android:id="@+id/action_nav_intervention_to_intervention_details"
+            app:destination="@id/interventionDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_client_details"
         android:name="com.holcvart.androidptut.view.fragment.ClientDetailsFragment"
@@ -45,4 +49,9 @@
             android:id="@+id/action_nav_client_details_to_nav_estimate"
             app:destination="@id/nav_estimate" />
     </fragment>
+    <fragment
+        android:id="@+id/interventionDetailsFragment"
+        android:name="com.holcvart.androidptut.view.fragment.InterventionDetailsFragment"
+        android:label="fragment_intervention_details"
+        tools:layout="@layout/fragment_intervention_details" />
 </navigation>

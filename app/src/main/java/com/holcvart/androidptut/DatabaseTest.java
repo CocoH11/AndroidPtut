@@ -111,7 +111,9 @@ public class DatabaseTest {
 
     public void insertInterventions(){
         Object[][] interventionsData = {
-                {"Changement écran Galaxy S3", "11-11-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, new Object[][]{{5, 1}, {0, 6}}}
+                {"Changement écran Galaxy S3", "11-11-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, new Object[][]{{5, 1}, {0, 6}}},
+                {"Changement écran Galaxy S3", "11-11-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, new Object[][]{{5, 1}, {0, 6}}},
+                {"Changement écran Galaxy S3", "11-11-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, new Object[][]{{5, 1}, {0, 6}}},
         };
 
         for (Object[] interventionData: interventionsData){

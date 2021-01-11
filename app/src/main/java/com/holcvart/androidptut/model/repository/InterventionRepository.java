@@ -17,8 +17,6 @@ import java.util.Random;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_ID_CLIENT;
 
 public class InterventionRepository extends EntityRepository{
-    private ClientRepository clientRepository;
-
     public InterventionRepository(SQLiteDatabase database) {
         super(database);
     }
@@ -52,9 +50,10 @@ public class InterventionRepository extends EntityRepository{
         createIntervention(cursor, (Intervention)entity);
     }
 
+    @Override
     public void findAll(List<Entity> entities) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(PhoneRepairManagementContract.Intervention.TABLE_NAME + " INNER JOIN " + PhoneRepairManagementContract.Client.TABLE_NAME + " ON " + COLUMN_NAME_ID_CLIENT + " = " + PhoneRepairManagementContract.Client._ID);
+        queryBuilder.setTables(PhoneRepairManagementContract.Intervention.TABLE_NAME/* + " INNER JOIN " + PhoneRepairManagementContract.Client.TABLE_NAME + " ON " + COLUMN_NAME_ID_CLIENT + " = " + PhoneRepairManagementContract.Client._ID*/);
         Cursor cursor= queryBuilder.query(database, null, null, null, null, null, null);
         while(cursor.moveToNext()){
             Intervention intervention= new Intervention();
@@ -98,12 +97,5 @@ public class InterventionRepository extends EntityRepository{
         intervention.setValid(isValidInt != 0);
         int isBilledInt=cursor.getInt(cursor.getColumnIndex(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED));
         intervention.setBilled(isBilledInt != 0);
-        Client client= new Client();
-        clientRepository.createClient(cursor, client);
-        intervention.setClient(client);
-    }
-
-    public void setClientRepository(ClientRepository clientRepository) {
-        this.clientRepository = clientRepository;
     }
 }

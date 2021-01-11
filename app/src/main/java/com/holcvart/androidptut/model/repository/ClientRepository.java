@@ -15,7 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ClientRepository extends EntityRepository{
-    private InterventionRepository interventionRepository;
     public ClientRepository(SQLiteDatabase database) {
         super(database);
     }
@@ -69,16 +68,12 @@ public class ClientRepository extends EntityRepository{
 
     @Override
     public void deleteAll() {
-        interventionRepository.deleteAll();
         database.delete(PhoneRepairManagementContract.Client.TABLE_NAME, null, null);
     }
 
     @Override
     public void delete(Entity entity) {
         Client client = (Client)entity;
-        for (Intervention intervention:client.getInterventions()) {
-            interventionRepository.delete(intervention);
-        }
         database.delete(PhoneRepairManagementContract.Intervention.TABLE_NAME,
                 PhoneRepairManagementContract.Intervention._ID + " = ?",
                 new String[]{String.valueOf(client.getId())});
@@ -105,9 +100,5 @@ public class ClientRepository extends EntityRepository{
         client.setEmail(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_EMAIL)));
         client.setPhone(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_PHONE)));
         client.setAddress(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_ADDRESS)));
-    }
-
-    public void setInterventionRepository(InterventionRepository interventionRepository) {
-        this.interventionRepository = interventionRepository;
     }
 }

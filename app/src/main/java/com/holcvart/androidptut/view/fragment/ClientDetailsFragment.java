@@ -3,7 +3,6 @@ package com.holcvart.androidptut.view.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.holcvart.androidptut.MainActivity;
@@ -22,8 +20,6 @@ import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.repository.ClientRepository;
 import com.holcvart.androidptut.view.model.ClientDetailViewModel;
 import com.holcvart.androidptut.view.model.ClientDetailsViewModelFactory;
-import com.holcvart.androidptut.view.model.ClientViewModelFactory;
-import com.holcvart.androidptut.view.model.EstimateViewModel;
 
 public class ClientDetailsFragment extends Fragment {
     private ClientDetailViewModel clientDetailViewModel;

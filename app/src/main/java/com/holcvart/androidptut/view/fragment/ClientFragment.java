@@ -16,7 +16,7 @@ import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.repository.ClientRepository;
 import com.holcvart.androidptut.view.model.ClientViewModel;
-import com.holcvart.androidptut.view.model.ClientViewModelFactory;
+import com.holcvart.androidptut.view.model.CustomViewModelFactory;
 import com.holcvart.androidptut.view.recycler_view.ClientListAdapter;
 
 public class ClientFragment extends Fragment {
@@ -25,7 +25,7 @@ public class ClientFragment extends Fragment {
     private RecyclerView recyclerView;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        ClientViewModelFactory viewModelFactory= new ClientViewModelFactory(new ClientRepository(((MainActivity)requireActivity()).getDatabase()));
+        CustomViewModelFactory viewModelFactory= new CustomViewModelFactory(new ClientRepository(((MainActivity)requireActivity()).getDatabase()));
         clientViewModel =
                 new ViewModelProvider(this, viewModelFactory).get(ClientViewModel.class);
         View root = inflater.inflate(R.layout.fragment_client, container, false);

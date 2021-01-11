@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.Adapter;
 
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Client;
@@ -14,7 +15,7 @@ import com.holcvart.androidptut.view.fragment.ClientFragment;
 
 import java.util.List;
 
-public class ClientListAdapter extends RecyclerView.Adapter {
+public class ClientListAdapter extends Adapter {
     private List<Entity> clients;
     private ClientFragment clientFragment;
 

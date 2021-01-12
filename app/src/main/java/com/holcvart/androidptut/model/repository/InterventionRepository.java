@@ -12,6 +12,7 @@ import com.holcvart.androidptut.model.entity.Intervention;
 import com.holcvart.androidptut.model.entity.PartsNeeded;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_ID_CLIENT;

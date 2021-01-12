@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_nav_client_to_nav_client_details"
             app:destination="@id/nav_client_details" />
+        <action
+            android:id="@+id/action_nav_client_to_client_create"
+            app:destination="@id/nav_client_create" />
     </fragment>
 
     <fragment
@@ -38,7 +41,7 @@
         tools:layout="@layout/intervention_fragment" >
         <action
             android:id="@+id/action_nav_intervention_to_intervention_details"
-            app:destination="@id/interventionDetailsFragment" />
+            app:destination="@id/nav_intervention_details" />
     </fragment>
     <fragment
         android:id="@+id/nav_client_details"
@@ -50,8 +53,17 @@
             app:destination="@id/nav_estimate" />
     </fragment>
     <fragment
-        android:id="@+id/interventionDetailsFragment"
+        android:id="@+id/nav_intervention_details"
         android:name="com.holcvart.androidptut.view.fragment.InterventionDetailsFragment"
         android:label="fragment_intervention_details"
         tools:layout="@layout/fragment_intervention_details" />
+    <fragment
+        android:id="@+id/nav_client_create"
+        android:name="com.holcvart.androidptut.view.fragment.ClientCreateFragment"
+        android:label="client_create_fragment"
+        tools:layout="@layout/client_create_fragment" >
+        <action
+            android:id="@+id/action_nav_client_create_to_nav_client_details"
+            app:destination="@id/nav_client_details" />
+    </fragment>
 </navigation>

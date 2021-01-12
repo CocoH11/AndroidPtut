@@ -3,6 +3,7 @@ package com.holcvart.androidptut.view.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +12,21 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.repository.ClientRepository;
 import com.holcvart.androidptut.view.model.ClientDetailViewModel;
-import com.holcvart.androidptut.view.model.ClientDetailsViewModelFactory;
+import com.holcvart.androidptut.view.model.CustomViewModelFactory;
 
 public class ClientDetailsFragment extends Fragment {
     private ClientDetailViewModel clientDetailViewModel;
+    private Client client;
     private TextView textViewFirstName;
     private TextView textViewName;
     private TextView textViewEmail;
@@ -31,18 +35,23 @@ public class ClientDetailsFragment extends Fragment {
     private Button buttonPhoneCall;
     private Button buttonEmailSend;
     private Button buttonGetEstimates;
+    private FloatingActionButton floatingActionButton;
+    private ActionBar actionBar;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ClientDetailsViewModelFactory viewModelFactory= new ClientDetailsViewModelFactory(new ClientRepository(((MainActivity)requireActivity()).getDatabase()));
+        CustomViewModelFactory viewModelFactory= new CustomViewModelFactory(new ClientRepository(((MainActivity)requireActivity()).getDatabase()));
         clientDetailViewModel = new ViewModelProvider(this, viewModelFactory).get(ClientDetailViewModel.class);
-        View root = inflater.inflate(R.layout.fragment_client_details, container, false);
-        return root;
+        client = clientDetailViewModel.findOneById(getArguments().getLong("clientId"));
+        return inflater.inflate(R.layout.fragment_client_details, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
+        actionBar = ((MainActivity)requireActivity()).getSupportActionBar();
+
         textViewFirstName= (TextView)view.findViewById(R.id.textViewClientFirstName);
         textViewName=(TextView)view.findViewById(R.id.textViewClientName);
         textViewEmail=(TextView)view.findViewById(R.id.textViewClientEmail);
@@ -52,7 +61,9 @@ public class ClientDetailsFragment extends Fragment {
         buttonEmailSend=(Button)view.findViewById(R.id.buttonEmailSend);
         buttonGetEstimates=(Button)view.findViewById(R.id.buttonGetEstimates);
 
-        Client client = clientDetailViewModel.findOneById(getArguments().getLong("clientId"));
+        customizeFloatingActionButton();
+        customizeActionBar();
+
         textViewFirstName.setText(client.getFirstName());
         textViewName.setText(client.getName());
         textViewEmail.setText(client.getEmail());
@@ -90,5 +101,19 @@ public class ClientDetailsFragment extends Fragment {
 
             }
         });
+    }
+
+    private void customizeFloatingActionButton(){
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("create new Client", "New Client");
+                //TODO: Create new Client
+            }
+        });
+    }
+
+    private void customizeActionBar(){
+        actionBar.setTitle(client.getFirstName()+" "+client.getName());
     }
 }

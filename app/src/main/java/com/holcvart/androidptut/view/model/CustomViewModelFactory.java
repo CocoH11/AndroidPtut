@@ -16,12 +16,10 @@ public class CustomViewModelFactory implements ViewModelProvider.Factory {
     @NonNull
     @Override
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-        if (modelClass.isAssignableFrom(ClientViewModel.class)) {
-            return (T)new ClientViewModel((ClientRepository)entityRepository);
-        }
-        if (modelClass.isAssignableFrom(InterventionViewModel.class)){
-            return (T)new InterventionViewModel((InterventionRepository)entityRepository);
-        }
+        if (modelClass.isAssignableFrom(ClientViewModel.class))return (T)new ClientViewModel((ClientRepository)entityRepository);
+        else if (modelClass.isAssignableFrom(InterventionViewModel.class))return (T)new InterventionViewModel((InterventionRepository)entityRepository);
+        else if (modelClass.isAssignableFrom(ClientCreateViewModel.class))return (T)new ClientCreateViewModel((ClientRepository)entityRepository);
+        else if (modelClass.isAssignableFrom(ClientDetailViewModel.class))return (T)new ClientDetailViewModel((ClientRepository)entityRepository);
         else throw new IllegalArgumentException("Unknown ViewModel class");
     }
 }

@@ -18,4 +18,8 @@
     <string name="button_get_estimates_text">Devis en cours</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_name">Nom</string>
+    <string name="hint_firstname">Prénom</string>
+    <string name="hint_phone">0456789900</string>
+    <string name="hint_email">jeanjean@gmail.com</string>
 </resources>

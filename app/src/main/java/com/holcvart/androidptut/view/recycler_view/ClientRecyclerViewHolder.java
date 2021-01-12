@@ -23,8 +23,4 @@ public class ClientRecyclerViewHolder extends RecyclerView.ViewHolder {
         textViewFirstName.setText(client.getFirstName());
         textViewName.setText(client.getName());
     }
-
-
-
-
 }

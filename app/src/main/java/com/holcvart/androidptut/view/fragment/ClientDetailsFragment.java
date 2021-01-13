@@ -10,11 +10,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.holcvart.androidptut.MainActivity;
@@ -37,6 +39,13 @@ public class ClientDetailsFragment extends Fragment {
     private Button buttonGetEstimates;
     private FloatingActionButton floatingActionButton;
     private ActionBar actionBar;
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        customizeBackNavigation();
+    }
 
     @Nullable
     @Override
@@ -107,13 +116,22 @@ public class ClientDetailsFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("create new Client", "New Client");
-                //TODO: Create new Client
+                Navigation.findNavController(getView()).navigate(R.id.action_nav_client_details_to_nav_client);
             }
         });
     }
 
     private void customizeActionBar(){
         actionBar.setTitle(client.getFirstName()+" "+client.getName());
+    }
+
+    private void customizeBackNavigation(){
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                Navigation.findNavController(getView()).navigate(R.id.action_nav_client_details_to_nav_client);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 }

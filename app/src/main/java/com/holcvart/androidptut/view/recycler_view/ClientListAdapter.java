@@ -16,10 +16,10 @@ import com.holcvart.androidptut.view.fragment.ClientFragment;
 import java.util.List;
 
 public class ClientListAdapter extends Adapter {
-    private List<Entity> clients;
+    private List<Client> clients;
     private ClientFragment clientFragment;
 
-    public ClientListAdapter(List<Entity> clients, ClientFragment clientFragment) {
+    public ClientListAdapter(List<Client> clients, ClientFragment clientFragment) {
         this.clients = clients;
         this.clientFragment=clientFragment;
     }
@@ -33,7 +33,7 @@ public class ClientListAdapter extends Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        ((ClientRecyclerViewHolder)holder).setDetails((Client)clients.get(position));
+        ((ClientRecyclerViewHolder)holder).setDetails(clients.get(position));
         ((ClientRecyclerViewHolder)holder).itemView.setOnClickListener(new ClientItemOnClickListener(position, clientFragment));
 
     }

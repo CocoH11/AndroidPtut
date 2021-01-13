@@ -41,7 +41,7 @@ public class ClientFragment extends Fragment {
         recyclerView = root.findViewById(R.id.clientRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        recyclerView.setAdapter(new ClientListAdapter(clientViewModel.findAll(), this));
+        recyclerView.setAdapter(new ClientListAdapter(clientViewModel.getClients(), this));
         return root;
     }
 

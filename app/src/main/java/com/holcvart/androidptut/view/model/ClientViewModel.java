@@ -13,14 +13,20 @@ import java.util.List;
 
 public class ClientViewModel extends ViewModel {
     private ClientRepository clientRepository;
+    private List<Client> clients;
 
     public ClientViewModel(ClientRepository clientRepository) {
         this.clientRepository=clientRepository;
+        clients = new ArrayList<>();
     }
 
     public List<Entity> findAll(){
         List<Entity> clients= new ArrayList<>();
         clientRepository.findAll(clients);
+        return clients;
+    }
+
+    public List<Client> getClients() {
         return clients;
     }
 }

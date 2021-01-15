@@ -3,17 +3,20 @@ package com.holcvart.androidptut.view.fragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
@@ -21,13 +24,10 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Client;
-import com.holcvart.androidptut.model.repository.ClientRepository;
 import com.holcvart.androidptut.view.model.ClientDetailViewModel;
-import com.holcvart.androidptut.view.model.CustomViewModelFactory;
 
-public class ClientDetailsFragment extends Fragment {
+public class ClientDetailsFragment extends Fragment implements Observer<Client>{
     private ClientDetailViewModel clientDetailViewModel;
-    private Client client;
     private TextView textViewFirstName;
     private TextView textViewName;
     private TextView textViewEmail;
@@ -38,21 +38,16 @@ public class ClientDetailsFragment extends Fragment {
     private Button buttonGetEstimates;
     private FloatingActionButton floatingActionButton;
     private ActionBar actionBar;
+    private Client mClient;
 
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        customizeBackNavigation();
-    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        CustomViewModelFactory viewModelFactory= new CustomViewModelFactory(new ClientRepository(((MainActivity)requireActivity()).getDatabase()));
-        clientDetailViewModel = new ViewModelProvider(this, viewModelFactory).get(ClientDetailViewModel.class);
-        client = clientDetailViewModel.findOneById(getArguments().getLong("clientId"));
-        return inflater.inflate(R.layout.fragment_client_details, container, false);
+        customizeBackNavigation();
+        clientDetailViewModel = new ViewModelProvider(this).get(ClientDetailViewModel.class);
+        View root = inflater.inflate(R.layout.fragment_client_details, container, false);
+        return root;
     }
 
     @Override
@@ -68,20 +63,13 @@ public class ClientDetailsFragment extends Fragment {
         buttonPhoneCall=(Button)view.findViewById(R.id.buttonPhoneCall);
         buttonEmailSend=(Button)view.findViewById(R.id.buttonEmailSend);
         buttonGetEstimates=(Button)view.findViewById(R.id.buttonGetEstimates);
-
         customizeFloatingActionButton();
-        customizeActionBar();
 
-        textViewFirstName.setText(client.getFirstName());
-        textViewName.setText(client.getName());
-        textViewEmail.setText(client.getEmail());
-        textViewPhone.setText(client.getPhone());
-        textViewAddress.setText(client.getAddress());
-
+        clientDetailViewModel.getClient().observe(getViewLifecycleOwner(), this);
         buttonPhoneCall.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String phoneNumber=textViewPhone.getText().toString();
+                String phoneNumber=mClient.getPhone();
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse("tel:" + phoneNumber));
                 startActivity(intent);
@@ -91,7 +79,7 @@ public class ClientDetailsFragment extends Fragment {
         buttonEmailSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] addresses=new String[]{textViewEmail.getText().toString()};
+                String[] addresses=new String[]{mClient.getEmail()};
                 String subject= "subject";
                 Intent intent = new Intent(Intent.ACTION_SENDTO);
                 intent.setData(Uri.parse("mailto:")); // only email apps should handle this
@@ -121,7 +109,7 @@ public class ClientDetailsFragment extends Fragment {
     }
 
     private void customizeActionBar(){
-        actionBar.setTitle(client.getFirstName()+" "+client.getName());
+        actionBar.setTitle(mClient.getFirstName()+" "+mClient.getName());
     }
 
     private void customizeBackNavigation(){
@@ -131,6 +119,17 @@ public class ClientDetailsFragment extends Fragment {
                 Navigation.findNavController(getView()).navigate(R.id.action_nav_client_details_to_nav_client);
             }
         };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), callback);
+    }
+
+    @Override
+    public void onChanged(Client client) {
+        if (mClient == null)mClient = client;
+        customizeActionBar();
+        textViewFirstName.setText(mClient.getFirstName());
+        textViewName.setText(mClient.getName());
+        textViewEmail.setText(mClient.getEmail());
+        textViewPhone.setText(mClient.getPhone());
+        textViewAddress.setText(mClient.getAddress());
     }
 }

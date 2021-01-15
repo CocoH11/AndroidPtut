@@ -1,15 +1,13 @@
 package com.holcvart.androidptut.view.fragment;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,30 +16,28 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
-import com.holcvart.androidptut.model.repository.ClientRepository;
+import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.view.model.ClientViewModel;
-import com.holcvart.androidptut.view.model.CustomViewModelFactory;
 import com.holcvart.androidptut.view.recycler_view.ClientListAdapter;
 
-public class ClientFragment extends Fragment {
+import java.util.List;
+
+public class ClientFragment extends Fragment implements Observer<List<Client>>{
 
     private ClientViewModel clientViewModel;
     private RecyclerView recyclerView;
     private FloatingActionButton floatingActionButton;
-    private EditText editTextName;
-    private EditText editTextFirstname;
+    private List<Client> mClients;
 
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        CustomViewModelFactory viewModelFactory= new CustomViewModelFactory(new ClientRepository(((MainActivity)requireActivity()).getDatabase()));
-        clientViewModel =
-                new ViewModelProvider(this, viewModelFactory).get(ClientViewModel.class);
+        clientViewModel = new ViewModelProvider(this).get(ClientViewModel.class);
         floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
         customizeFloatingActionButton();
         View root = inflater.inflate(R.layout.fragment_client, container, false);
         recyclerView = root.findViewById(R.id.clientRecyclerView);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));
-        recyclerView.setAdapter(new ClientListAdapter(clientViewModel.getClients(), this));
+        clientViewModel.getClients().observe(getViewLifecycleOwner(), this);
         return root;
     }
 
@@ -50,7 +46,6 @@ public class ClientFragment extends Fragment {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("create new Client", "New Client");
                 Navigation.findNavController(getView()).navigate(R.id.action_nav_client_to_client_create);
             }
         });
@@ -61,5 +56,15 @@ public class ClientFragment extends Fragment {
         Bundle bundle = new Bundle();
         bundle.putLong("clientId", id);
         Navigation.findNavController(view).navigate(R.id.action_nav_client_to_nav_client_details, bundle);
+    }
+
+    private ClientFragment getClientFragment(){
+        return this;
+    }
+
+    @Override
+    public void onChanged(List<Client> clients) {
+        if(mClients == null)mClients = clients;
+        recyclerView.setAdapter(new ClientListAdapter(mClients, getClientFragment()));
     }
 }

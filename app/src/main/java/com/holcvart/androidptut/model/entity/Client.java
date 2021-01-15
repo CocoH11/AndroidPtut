@@ -3,7 +3,7 @@ package com.holcvart.androidptut.model.entity;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Client extends Entity {
+public class Client extends Entity{
     private String firstName;
     private String name;
     private String email;

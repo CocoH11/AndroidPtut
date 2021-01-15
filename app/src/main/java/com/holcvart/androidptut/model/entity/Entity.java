@@ -1,6 +1,8 @@
 package com.holcvart.androidptut.model.entity;
 
-public abstract class Entity {
+import java.util.Observable;
+
+public abstract class Entity extends Observable {
     protected long id;
     public Entity(){}
     public Entity(long id){

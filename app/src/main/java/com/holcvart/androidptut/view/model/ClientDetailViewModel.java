@@ -1,20 +1,44 @@
 package com.holcvart.androidptut.view.model;
 
+import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
+
+import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.holcvart.androidptut.model.database.PhoneRepairManagementDBHelper;
 import com.holcvart.androidptut.model.entity.Client;
+import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.repository.ClientRepository;
 
-public class ClientDetailViewModel extends ViewModel {
-    private ClientRepository clientRepository;
+import java.util.ArrayList;
+import java.util.List;
 
-    public ClientDetailViewModel(ClientRepository clientRepository){
-        this.clientRepository=clientRepository;
+public class ClientDetailViewModel extends AndroidViewModel {
+    private ClientRepository clientRepository;
+    private MutableLiveData<Client> client;
+
+    public ClientDetailViewModel(Application application){
+        super(application);
+        SQLiteDatabase database = new PhoneRepairManagementDBHelper(application.getBaseContext()).getWritableDatabase();
+        clientRepository = new ClientRepository(database);
     }
 
-    public Client findOneById(long id){
-        Client client = new Client();
-        clientRepository.findOneById(id, client);
+    public MutableLiveData<Client> getClient(){
+        if (client == null){
+            client = new MutableLiveData<>();
+            long id = 1;
+            loadClient(id);
+        }
         return client;
+    }
+
+    public void loadClient(long id){
+        Client newClient = new Client();
+        clientRepository.findOneById(id, newClient);
+        Log.d("client name", newClient.getName());
+        client.setValue(newClient);
     }
 }

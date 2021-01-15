@@ -21,7 +21,6 @@ import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.repository.ClientRepository;
 import com.holcvart.androidptut.view.model.ClientCreateViewModel;
-import com.holcvart.androidptut.view.model.CustomViewModelFactory;
 
 public class ClientCreateFragment extends Fragment {
     private EditText editTextName;
@@ -49,8 +48,7 @@ public class ClientCreateFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        CustomViewModelFactory customViewModelFactory = new CustomViewModelFactory(new ClientRepository(((MainActivity)requireActivity()).getDatabase()));
-        mViewModel = new ViewModelProvider(this, customViewModelFactory).get(ClientCreateViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(ClientCreateViewModel.class);
     }
 
     @Override

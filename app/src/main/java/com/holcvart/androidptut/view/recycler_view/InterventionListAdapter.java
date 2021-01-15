@@ -20,13 +20,13 @@ import static androidx.recyclerview.widget.RecyclerView.*;
 
 public class InterventionListAdapter extends Adapter {
 
-    private List<Entity> interventions;
+    private List<Intervention> interventions;
     private InterventionFragment interventionFragment;
 
-    public InterventionListAdapter(List<Entity> interventions, InterventionFragment interventionFragment) {
+    public InterventionListAdapter(List<Intervention> interventions, InterventionFragment interventionFragment) {
         this.interventions = interventions;
         this.interventionFragment=interventionFragment;
-        Log.d("intervention title", ((Intervention)interventions.get(0)).getTitle());
+        Log.d("intervention title", (interventions.get(0)).getTitle());
     }
 
     @NonNull
@@ -38,7 +38,7 @@ public class InterventionListAdapter extends Adapter {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ((InterventionRecyclerViewHolder)holder).setDetails((Intervention)interventions.get(position));
+        ((InterventionRecyclerViewHolder)holder).setDetails(interventions.get(position));
         ((InterventionRecyclerViewHolder)holder).itemView.setOnClickListener(new InterventionItemOnClickListener(position, interventionFragment));
     }
 

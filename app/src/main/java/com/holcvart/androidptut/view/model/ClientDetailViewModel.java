@@ -26,10 +26,9 @@ public class ClientDetailViewModel extends AndroidViewModel {
         clientRepository = new ClientRepository(database);
     }
 
-    public MutableLiveData<Client> getClient(){
+    public MutableLiveData<Client> getClient(long id){
         if (client == null){
             client = new MutableLiveData<>();
-            long id = 1;
             loadClient(id);
         }
         return client;
@@ -38,7 +37,6 @@ public class ClientDetailViewModel extends AndroidViewModel {
     public void loadClient(long id){
         Client newClient = new Client();
         clientRepository.findOneById(id, newClient);
-        Log.d("client name", newClient.getName());
         client.setValue(newClient);
     }
 }

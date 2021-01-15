@@ -89,7 +89,7 @@ public class ClientRepository extends EntityRepository{
         values.put(PhoneRepairManagementContract.Client.COLUMN_NAME_EMAIL, client.getEmail());
         values.put(PhoneRepairManagementContract.Client.COLUMN_NAME_PHONE, client.getPhone());
         values.put(PhoneRepairManagementContract.Client.COLUMN_NAME_ADDRESS, client.getAddress());
-        database.update(PhoneRepairManagementContract.Client.TABLE_NAME, values, PhoneRepairManagementContract.Client._ID, new String[]{String.valueOf(client.getId())});
+        database.update(PhoneRepairManagementContract.Client.TABLE_NAME, values, PhoneRepairManagementContract.Client._ID + " = ?", new String[]{String.valueOf(client.getId())});
     }
 
 

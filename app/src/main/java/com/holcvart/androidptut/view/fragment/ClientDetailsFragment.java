@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,9 +16,12 @@ import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.core.app.NavUtils;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavAction;
+import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 
@@ -44,14 +48,18 @@ public class ClientDetailsFragment extends Fragment implements Observer<Client>,
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                Log.d("hello", "hello");
-                NavHostFragment.findNavController(getClientDetailsFragment()).navigate(R.id.action_nav_client_details_to_nav_client);
-            }
-        };
-        getActivity().getOnBackPressedDispatcher().addCallback(getActivity(), callback);
+        setHasOptionsMenu(true);
+        customizeBackNavigation();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                Navigation.findNavController(getView()).navigate(R.id.action_nav_client_details_to_nav_client);
+                break;
+        }
+        return false;
     }
 
     @Nullable
@@ -96,7 +104,13 @@ public class ClientDetailsFragment extends Fragment implements Observer<Client>,
     }
 
     private void customizeBackNavigation(){
-
+        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                NavHostFragment.findNavController(getClientDetailsFragment()).navigate(R.id.action_nav_client_details_to_nav_client);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

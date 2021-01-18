@@ -92,4 +92,12 @@ public class Client extends Entity{
         interventions.add(intervention);
         intervention.setClient(this);
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "firstName='" + firstName + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

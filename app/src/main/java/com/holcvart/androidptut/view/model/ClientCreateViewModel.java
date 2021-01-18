@@ -41,7 +41,7 @@ public class ClientCreateViewModel extends AndroidViewModel {
 
     public void loadClient(long id){
         Client newClient = new Client();
-        if (id != -1)clientRepository.findOneById(id, newClient);
+        if (id != -1)clientRepository.findOneById(id, newClient, null);
         else newClient.setId(id);
         client.setValue(newClient);
     }

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.util.Log;
 
 import com.holcvart.androidptut.model.database.PhoneRepairManagementContract;
 import com.holcvart.androidptut.model.entity.Client;
@@ -11,11 +12,19 @@ import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.entity.Intervention;
 import com.holcvart.androidptut.model.entity.PartsNeeded;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DATE;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_ID_CLIENT;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_TITLE;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.TABLE_NAME;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention._ID;
 
 public class InterventionRepository extends EntityRepository{
     public InterventionRepository(SQLiteDatabase database) {
@@ -31,6 +40,7 @@ public class InterventionRepository extends EntityRepository{
         values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION, intervention.getDescription());
         values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID, intervention.isValid());
         values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED, intervention.isBilled());
+        if (intervention.getClient() != null)values.put(COLUMN_NAME_ID_CLIENT, intervention.getClient().getId());
         intervention.setId(database.insert(PhoneRepairManagementContract.Intervention.TABLE_NAME, null, values));
 
         for (PartsNeeded partsNeeded:intervention.getPartsNeededs()) {
@@ -43,10 +53,38 @@ public class InterventionRepository extends EntityRepository{
     }
 
     @Override
-    public void findOneById(long id, Entity entity) {
+    public void findOneById(long id, Entity entity, Map<String, String[]> args) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(PhoneRepairManagementContract.Intervention.TABLE_NAME + " INNER JOIN " + PhoneRepairManagementContract.Client.TABLE_NAME + " ON " + COLUMN_NAME_ID_CLIENT + " = " + PhoneRepairManagementContract.Client._ID);
-        Cursor cursor= queryBuilder.query(database, null, null, null, null, null, null);
+        String selection = PhoneRepairManagementContract.Intervention._ID + " = ?";
+        String[] selectionArgs = { String.valueOf(id) };
+        String tables = TABLE_NAME;
+        List<String> projectionInList = new ArrayList<String>();
+        projectionInList.add(_ID);
+        projectionInList.add(COLUMN_NAME_TITLE);
+        projectionInList.add(COLUMN_NAME_DESCRIPTION);
+        projectionInList.add(COLUMN_NAME_DATE);
+        projectionInList.add(COLUMN_NAME_IS_BILLED);
+        projectionInList.add(COLUMN_NAME_IS_VALID);
+        if (args != null && args.get("client").length != 0){
+            tables += " INNER JOIN " + PhoneRepairManagementContract.Client.TABLE_NAME + " ON (" + COLUMN_NAME_ID_CLIENT + " = " + PhoneRepairManagementContract.Client._ID + ")";
+            projectionInList.add(COLUMN_NAME_ID_CLIENT);
+            for (int i = 0; i < args.get("client").length; i++) {
+                String[] clientsArgs = args.get("client");
+                switch (clientsArgs[i]){
+                    case "firstName":
+                        projectionInList.add(PhoneRepairManagementContract.Client.COLUMN_NAME_FIRST_NAME);
+                        break;
+                    case "name":
+                        projectionInList.add(PhoneRepairManagementContract.Client.COLUMN_NAME_NAME);
+                        break;
+                }
+            }
+        }
+        System.out.println(tables);
+        queryBuilder.setTables(tables);
+        String[] projectionIn = new String[projectionInList.size()];
+        for (int i = 0; i < projectionInList.size(); i++)projectionIn[i] = projectionInList.get(i);
+        Cursor cursor= queryBuilder.query(database, projectionIn, selection, selectionArgs, null, null, null);
         if (!cursor.moveToNext())return;
         createIntervention(cursor, (Intervention)entity);
     }
@@ -54,7 +92,7 @@ public class InterventionRepository extends EntityRepository{
     @Override
     public void findAll(List<Entity> entities) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        queryBuilder.setTables(PhoneRepairManagementContract.Intervention.TABLE_NAME/* + " INNER JOIN " + PhoneRepairManagementContract.Client.TABLE_NAME + " ON " + COLUMN_NAME_ID_CLIENT + " = " + PhoneRepairManagementContract.Client._ID*/);
+        queryBuilder.setTables(PhoneRepairManagementContract.Intervention.TABLE_NAME + " INNER JOIN " + PhoneRepairManagementContract.Client.TABLE_NAME + " ON (" + COLUMN_NAME_ID_CLIENT + " = " + PhoneRepairManagementContract.Client._ID + ")");
         Cursor cursor= queryBuilder.query(database, null, null, null, null, null, null);
         while(cursor.moveToNext()){
             Intervention intervention= new Intervention();
@@ -86,7 +124,8 @@ public class InterventionRepository extends EntityRepository{
         values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION, intervention.getDescription());
         values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID, intervention.isValid());
         values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED, intervention.isBilled());
-        database.update(PhoneRepairManagementContract.Intervention.TABLE_NAME, values, PhoneRepairManagementContract.Intervention._ID + " = ?", new String[]{String.valueOf(intervention.getId())});
+        values.put(COLUMN_NAME_ID_CLIENT, intervention.getClient().getId());
+        int result = database.update(PhoneRepairManagementContract.Intervention.TABLE_NAME, values, PhoneRepairManagementContract.Intervention._ID + " = ?", new String[]{String.valueOf(intervention.getId())});
     }
 
     private void createIntervention(Cursor cursor, Intervention intervention){
@@ -98,5 +137,7 @@ public class InterventionRepository extends EntityRepository{
         intervention.setValid(isValidInt != 0);
         int isBilledInt=cursor.getInt(cursor.getColumnIndex(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED));
         intervention.setBilled(isBilledInt != 0);
+        intervention.setClient(new Client());
+        System.out.println("Interve,ntion id: "+intervention.getId());
     }
 }

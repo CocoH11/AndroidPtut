@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.holcvart.androidptut.model.entity.Entity;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class EntityRepository {
     protected SQLiteDatabase database;
@@ -12,7 +13,7 @@ public abstract class EntityRepository {
         this.database = database;
     }
     public abstract void insert(Entity entity);
-    public abstract void findOneById(long id, Entity entity);
+    public abstract void findOneById(long id, Entity entity, Map<String, String[]> args);
     public abstract void findAll(List<Entity> entities);
     public abstract void deleteAll();
     public abstract void delete(Entity entity);

@@ -22,7 +22,9 @@ import com.holcvart.androidptut.model.repository.ProviderRepository;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class DatabaseTest {
     private SQLiteDatabase database;
@@ -98,11 +100,11 @@ public class DatabaseTest {
             for (int i = 0; i < Array.getLength(dealData[2]); i++) {
                 Object[][] partsStoredData = (Object[][])dealData[2];
                 Part part = new Part();
-                partRepository.findOneById(((Number)partsStoredData[i][0]).longValue(), part);
+                partRepository.findOneById(((Number)partsStoredData[i][0]).longValue(), part, null);
                 partStoredList.add(new PartsStored(((Number)partsStoredData[i][0]).intValue(), part));
             }
             Provider provider = new Provider();
-            providerRepository.findOneById(((Number)dealData[1]).longValue(), provider);
+            providerRepository.findOneById(((Number)dealData[1]).longValue(), provider, null);
             Deal deal = new Deal((String)dealData[0], provider);
             deal.setDeals(partStoredList);
             dealRepository.insert(deal);
@@ -121,7 +123,7 @@ public class DatabaseTest {
             for (int i = 0; i < Array.getLength(interventionData[5]); i++) {
                 Object[][] partsNeededData = (Object[][])interventionData[5];
                 Part part = new Part();
-                partRepository.findOneById(((Number)partsNeededData[i][1]).longValue(), part);
+                partRepository.findOneById(((Number)partsNeededData[i][1]).longValue(), part, null);
                 PartsNeeded partsNeeded = new PartsNeeded(((Number)partsNeededData[i][0]).intValue(), part);
                 partsNeededList.add(partsNeeded);
             }
@@ -133,19 +135,25 @@ public class DatabaseTest {
 
     public void insertClient(){
         Object[][] clientsData = {
-                {"Corentin", "Holcvart", "corentin.holcvart@hotmail.fr", "0770447108", "4 les grandes haies 70210 Fontenois la ville", new int[]{0}}
+                {"Corentin", "Holcvart", "corentin.holcvart@hotmail.fr", "0770447108", "4 les grandes haies 70210 Fontenois la ville", new int[]{1, 2}},
+                {"Audrey", "Holcvart", "audrey.holcvart@yahoo.fr", "0612440198", "4 les grandes haies 70210 Fontenois la ville", new int[]{3}}
         };
 
         for (Object[]clientData:clientsData) {
             List<Intervention> interventions = new ArrayList<Intervention>();
             Client client = new Client((String)clientData[0], (String)clientData[1], (String)clientData[2], (String)clientData[3], (String)clientData[4]);
+            clientRepository.insert(client);
             for (int i = 0; i < Array.getLength(clientData[5]); i++){
                 Intervention intervention = new Intervention();
-                interventionRepository.findOneById(Array.getLong(clientData[5], i), intervention);
+                /*Map<String, String[]> args = new HashMap<>();
+                args.put("client", new String[]{"firstName", "name"});*/
+                interventionRepository.findOneById(Array.getLong(clientData[5], i), intervention, null);
+                System.out.println("intervention title: "+intervention.getTitle());
                 client.addInterventions(intervention);
                 intervention.setClient(client);
+                interventionRepository.update(intervention);
             }
-            clientRepository.insert(client);
+            clientRepository.update(client);
         }
     }
 }

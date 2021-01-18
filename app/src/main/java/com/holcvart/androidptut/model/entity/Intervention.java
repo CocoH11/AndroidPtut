@@ -14,6 +14,7 @@ public class Intervention extends Entity{
 
     public Intervention(){
         super();
+        partsNeededs = new ArrayList<>();
     }
 
     public Intervention(String title, String date, String description, boolean isValid, boolean isBilled){

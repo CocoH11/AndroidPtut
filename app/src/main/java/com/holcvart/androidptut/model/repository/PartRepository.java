@@ -9,6 +9,7 @@ import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.entity.Part;
 
 import java.util.List;
+import java.util.Map;
 
 public class PartRepository extends EntityRepository{
     public PartRepository(SQLiteDatabase database) {
@@ -27,7 +28,7 @@ public class PartRepository extends EntityRepository{
     }
 
     @Override
-    public void findOneById(long id, Entity entity) {
+    public void findOneById(long id, Entity entity, Map<String, String[]> args) {
         String selection = PhoneRepairManagementContract.Part._ID + " = ?";
         String[] selectionArgs = { String.valueOf(id) };
         Cursor cursor = database.query(PhoneRepairManagementContract.Part.TABLE_NAME, null, selection, selectionArgs, null, null, null);

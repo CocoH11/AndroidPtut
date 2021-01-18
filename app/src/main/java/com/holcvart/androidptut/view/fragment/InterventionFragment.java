@@ -12,10 +12,12 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Client;
@@ -32,15 +34,13 @@ public class InterventionFragment extends Fragment {
     private InterventionViewModel mViewModel;
     private RecyclerView recyclerView;
     private List<Intervention> mInterventions;
-
-    public static InterventionFragment newInstance() {
-        return new InterventionFragment();
-    }
+    private FloatingActionButton floatingActionButton;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mViewModel = new ViewModelProvider(this).get(InterventionViewModel.class);
+        floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
+        customizeFloatingActionButton();
         View root = inflater.inflate(R.layout.intervention_fragment, container, false);
         recyclerView = root.findViewById(R.id.interventionRecyclerView);
         recyclerView.setHasFixedSize(true);
@@ -54,6 +54,16 @@ public class InterventionFragment extends Fragment {
         };
         mViewModel.getInterventions().observe(getViewLifecycleOwner(), clientsObserver);
         return root;
+    }
+
+    private void customizeFloatingActionButton(){
+        floatingActionButton.setImageResource(android.R.drawable.ic_input_add);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(getView()).navigate(R.id.action_nav_intervention_to_nav_intervention_create);
+            }
+        });
     }
 
     public void navToDetailedView(View view, int position){

@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.ArrayMap;
+import android.util.Log;
 
 import com.holcvart.androidptut.model.database.PhoneRepairManagementContract;
 import com.holcvart.androidptut.model.entity.Client;
@@ -30,7 +31,7 @@ public class ClientRepository extends EntityRepository{
         client.setId(database.insert(PhoneRepairManagementContract.Client.TABLE_NAME, null, values));
     }
 
-    public void findOneById(long id, Entity entity){
+    public void findOneById(long id, Entity entity, Map<String, String[]> args){
         String selection = PhoneRepairManagementContract.Client._ID + " = ?";
         String[] selectionArgs = { String.valueOf(id) };
         Cursor cursor=database.query

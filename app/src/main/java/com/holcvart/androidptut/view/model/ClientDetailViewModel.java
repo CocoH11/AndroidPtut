@@ -36,7 +36,7 @@ public class ClientDetailViewModel extends AndroidViewModel {
 
     public void loadClient(long id){
         Client newClient = new Client();
-        clientRepository.findOneById(id, newClient);
+        clientRepository.findOneById(id, newClient, null);
         client.setValue(newClient);
     }
 }

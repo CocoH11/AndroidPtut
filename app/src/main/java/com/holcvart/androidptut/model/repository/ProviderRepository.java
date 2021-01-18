@@ -8,6 +8,7 @@ import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.entity.Provider;
 
 import java.util.List;
+import java.util.Map;
 
 public class ProviderRepository extends EntityRepository{
     public ProviderRepository(SQLiteDatabase database) {
@@ -23,7 +24,7 @@ public class ProviderRepository extends EntityRepository{
     }
 
     @Override
-    public void findOneById(long id, Entity entity) {
+    public void findOneById(long id, Entity entity, Map<String, String[]> args) {
 
     }
 

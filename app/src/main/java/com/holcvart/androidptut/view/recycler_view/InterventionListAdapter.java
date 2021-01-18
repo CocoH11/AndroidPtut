@@ -26,7 +26,6 @@ public class InterventionListAdapter extends Adapter {
     public InterventionListAdapter(List<Intervention> interventions, InterventionFragment interventionFragment) {
         this.interventions = interventions;
         this.interventionFragment=interventionFragment;
-        Log.d("intervention title", (interventions.get(0)).getTitle());
     }
 
     @NonNull

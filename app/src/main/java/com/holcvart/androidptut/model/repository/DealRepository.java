@@ -9,6 +9,7 @@ import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.entity.PartsStored;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 public class DealRepository extends EntityRepository{
@@ -34,7 +35,7 @@ public class DealRepository extends EntityRepository{
     }
 
     @Override
-    public void findOneById(long id, Entity entity) {
+    public void findOneById(long id, Entity entity, Map<String, String[]> args) {
 
     }
 

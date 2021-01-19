@@ -1,7 +1,6 @@
 package com.holcvart.androidptut.model.database;
 
 import android.provider.BaseColumns;
-import android.widget.TableLayout;
 
 public final class PhoneRepairManagementContract {
     public static final int DATABASE_VERSION = 1;
@@ -73,6 +72,9 @@ public final class PhoneRepairManagementContract {
         public static final String SQL_DROP_TABLE =
                 "DROP TABLE IF EXISTS " + TABLE_NAME + ";"
                 ;
+
+        public static final String SQL_TABLE_JOIN_CLIENT =
+                TABLE_NAME +" INNER JOIN " + Client.TABLE_NAME + " ON (" + COLUMN_NAME_ID_CLIENT + " = " + PhoneRepairManagementContract.Client._ID + ")";
     }
 
     public static final class Part implements BaseColumns{

@@ -64,7 +64,6 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
         actionBar = ((MainActivity)requireActivity()).getSupportActionBar();
         textViewDescription=(TextView)view.findViewById(R.id.textViewInterventionDetailsDescription);
         customizeFloatingActionButton();
-        Log.d("intervention Id", String.valueOf(getArguments().getLong("interventionId")));
         interventionDetailsViewModel.getIntervention(getArguments().getLong("interventionId")).observe(getViewLifecycleOwner(), this);
     }
 

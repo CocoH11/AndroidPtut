@@ -33,16 +33,15 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     private SQLiteDatabase database;
-    private DatabaseTest databaseTest;
     private FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.database= new PhoneRepairManagementDBHelper(getBaseContext()).getWritableDatabase();
-        databaseTest = new DatabaseTest(getBaseContext());
+        /*this.database= new PhoneRepairManagementDBHelper(getBaseContext()).getWritableDatabase();
+        DatabaseTest databaseTest = new DatabaseTest(getBaseContext());
         databaseTest.refreshDatabase();
-        databaseTest.fillDatabase();
+        databaseTest.fillDatabase();*/
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

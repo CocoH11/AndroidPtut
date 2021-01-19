@@ -81,6 +81,9 @@ public class InterventionCreateFragment extends Fragment implements Observer<Int
                 mIntervention.setTitle(editTextTitle.getText().toString());
                 mIntervention.setDescription(editTextDescription.getText().toString());
                 mIntervention.setDate(editTextDate.getText().toString());
+                Client client = new Client();
+                client.setId(clientSpinner.getSelectedItemId());
+                mIntervention.setClient(client);
                 mViewModel.insertOrUpdate();
                 navToDetailedView(getView());
             }
@@ -101,7 +104,7 @@ public class InterventionCreateFragment extends Fragment implements Observer<Int
         editTextDescription.setText(intervention.getDescription());
         editTextDate.setText(intervention.getDate());
         for (int i = 0; i <clientSpinner.getAdapter().getCount() ; i++) {
-            if (clientSpinner.getItemIdAtPosition(i) == mClients.get(i).getId())clientSpinner.setSelection(i);
+            if (clientSpinner.getItemIdAtPosition(i) == mIntervention.getClient().getId())clientSpinner.setSelection(i);
         }
     }
 }

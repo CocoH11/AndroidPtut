@@ -32,6 +32,7 @@ public class InterventionCreateViewModel extends AndroidViewModel {
     }
 
     public void insertOrUpdate(){
+        System.out.println("intervention id in create fragment: " + intervention.getValue().getId());
         if (intervention.getValue().getId()==-1) interventionRepository.insert(intervention.getValue());
         else interventionRepository.update(intervention.getValue());
     }
@@ -51,7 +52,7 @@ public class InterventionCreateViewModel extends AndroidViewModel {
     public void loadIntervention(long id){
         Intervention newIntervention = new Intervention();
         Map<String, String[]> args = new HashMap<>();
-        args.put("client", new String[]{"firstName", "name"});
+        //args.put("client", new String[]{"firstName", "name"});
         if (id != -1) interventionRepository.findOneById(id, newIntervention, args);
         else newIntervention.setId(id);
         intervention.setValue(newIntervention);

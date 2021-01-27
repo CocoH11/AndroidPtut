@@ -1,5 +1,11 @@
 package com.holcvart.androidptut.model.entity;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import com.holcvart.androidptut.model.database.PhoneRepairManagementContract;
+import com.holcvart.androidptut.model.database.PhoneRepairManagementDBHelper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +17,10 @@ public class Intervention extends Entity{
     private boolean isBilled;
     private Client client;
     private List<PartsNeeded> partsNeededs;
+
+    public static void findOneBy(SQLiteDatabase database, long id, String tables, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy){
+        Cursor cursor = database.query(tables, columns, selection, selectionArgs, groupBy, having, orderBy);
+    }
 
     public Intervention(){
         super();

@@ -11,6 +11,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -26,11 +29,16 @@ import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.entity.Intervention;
 import com.holcvart.androidptut.view.model.ClientDetailViewModel;
 import com.holcvart.androidptut.view.model.InterventionDetailsViewModel;
+import com.holcvart.androidptut.view.recycler_view.InterventionListAdapter;
+import com.holcvart.androidptut.view.recycler_view.PartsListAdapter;
+
+import java.util.List;
 
 public class InterventionDetailsFragment extends Fragment implements View.OnClickListener , Observer<Intervention> {
     private InterventionDetailsViewModel interventionDetailsViewModel;
     private TextView textViewDescription;
     private FloatingActionButton floatingActionButton;
+    private RecyclerView recyclerView;
     private ActionBar actionBar;
     private Intervention mIntervention;
 
@@ -63,6 +71,9 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
         floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
         actionBar = ((MainActivity)requireActivity()).getSupportActionBar();
         textViewDescription=(TextView)view.findViewById(R.id.textViewInterventionDetailsDescription);
+        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewPartsList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getView().getContext()));
         customizeFloatingActionButton();
         interventionDetailsViewModel.getIntervention(getArguments().getLong("interventionId")).observe(getViewLifecycleOwner(), this);
     }
@@ -109,6 +120,7 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
         customizeActionBar();
         System.out.println(mIntervention.getTitle());
         textViewDescription.setText(mIntervention.getDescription());
+        recyclerView.setAdapter(new PartsListAdapter(mIntervention.getPartsNeededs()));
     }
 
     public InterventionDetailsFragment getInterventionDetailsFragment(){

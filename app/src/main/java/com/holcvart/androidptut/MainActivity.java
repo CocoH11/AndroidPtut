@@ -38,10 +38,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*this.database= new PhoneRepairManagementDBHelper(getBaseContext()).getWritableDatabase();
+        this.database= new PhoneRepairManagementDBHelper(getBaseContext()).getWritableDatabase();
         DatabaseTest databaseTest = new DatabaseTest(getBaseContext());
         databaseTest.refreshDatabase();
-        databaseTest.fillDatabase();*/
+        databaseTest.fillDatabase();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

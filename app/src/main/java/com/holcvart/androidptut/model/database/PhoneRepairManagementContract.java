@@ -74,7 +74,22 @@ public final class PhoneRepairManagementContract {
                 ;
 
         public static final String SQL_TABLE_JOIN_CLIENT =
-                TABLE_NAME +" INNER JOIN " + Client.TABLE_NAME + " ON (" + COLUMN_NAME_ID_CLIENT + " = " + PhoneRepairManagementContract.Client._ID + ")";
+                TABLE_NAME +" INNER JOIN " + Client.TABLE_NAME + " ON (" + COLUMN_NAME_ID_CLIENT + " = " + Client._ID + ")";
+
+        public static final String SQL_TABLE_LEFT_JOIN_ALL =
+                Client.TABLE_NAME + " LEFT JOIN " + TABLE_NAME + " ON (" + Client._ID + " = " + COLUMN_NAME_ID_CLIENT + ")"
+                        + "LEFT JOIN " + Need.TABLE_NAME + " ON (" + _ID + " = " + Need.COLUMN_NAME_ID_INTERVENTION + ")" +" LEFT JOIN " + Part.TABLE_NAME + " ON (" + Need._ID + " = " + Part._ID + ")";
+
+        public static String SQL_WHERE(String[] args){
+            StringBuilder sql = new StringBuilder();
+            if (args.length != 0){
+                sql.append(args[0]).append(" = ? ");
+                for (int i = 1; i < args.length ; i++) {
+                    sql.append("AND ").append(args[i]).append(" = ? ");
+                }
+            }
+            return sql.toString();
+        }
     }
 
     public static final class Part implements BaseColumns{

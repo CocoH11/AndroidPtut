@@ -5,6 +5,10 @@ public class PartsNeeded extends Entity{
     private Part part;
     private Intervention intervention;
 
+    public PartsNeeded(){
+        super();
+    }
+
     public PartsNeeded(int quantity, Part part){
         this.quantity=quantity;
         this.part=part;

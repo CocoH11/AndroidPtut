@@ -3,13 +3,16 @@ package com.holcvart.androidptut.model.repository;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteQuery;
 import android.database.sqlite.SQLiteQueryBuilder;
+import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.holcvart.androidptut.model.database.PhoneRepairManagementContract;
 import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.entity.Entity;
 import com.holcvart.androidptut.model.entity.Intervention;
+import com.holcvart.androidptut.model.entity.Part;
 import com.holcvart.androidptut.model.entity.PartsNeeded;
 
 import java.util.ArrayList;
@@ -24,6 +27,7 @@ import static com.holcvart.androidptut.model.database.PhoneRepairManagementContr
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_TITLE;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.SQL_TABLE_JOIN_CLIENT;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.SQL_TABLE_LEFT_JOIN_ALL;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.TABLE_NAME;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention._ID;
 
@@ -55,10 +59,9 @@ public class InterventionRepository extends EntityRepository{
     @Override
     public void findOneById(long id, Entity entity, Map<String, String[]> args) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
-        String selection = PhoneRepairManagementContract.Intervention._ID + " = ?";
+        String selection = PhoneRepairManagementContract.Intervention._ID + " = ? ";
         String[] selectionArgs = { String.valueOf(id) };
         String tables = SQL_TABLE_JOIN_CLIENT;
-        System.out.println("tables: " + tables);
         queryBuilder.setTables(tables);
         Cursor cursor= queryBuilder.query(database, null, selection, selectionArgs, null, null, null);
         if (cursor.getCount() == 0){
@@ -72,6 +75,60 @@ public class InterventionRepository extends EntityRepository{
             createClient(cursor, client);
             ((Intervention) entity).setClient(client);
         }
+    }
+
+    public void find(Entity entity, String[] columns, String selection, String[] selectionArgs){
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        String tables = SQL_TABLE_LEFT_JOIN_ALL;
+        queryBuilder.setTables(tables);
+        Cursor cursor = queryBuilder.query(database, null, selection, selectionArgs, null, null, null);
+        if (cursor.getCount() == 0)return;
+        cursor.moveToNext();
+        if (cursor.getColumnIndex(_ID) != -1)makeIntervention(cursor, (Intervention)entity);
+        Client client = new Client();
+        if (cursor.getColumnIndex(COLUMN_NAME_ID_CLIENT) != -1)makeClient(cursor, client);
+        ((Intervention) entity).setClient(client);
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Need._ID) != -1){
+            List<PartsNeeded> partsNeededList = new ArrayList<>();
+            do{
+                System.out.println("parts");
+                Part part = new Part();
+                PartsNeeded partsNeeded = new PartsNeeded();
+                makeParts(cursor, part, partsNeeded);
+                partsNeededList.add(partsNeeded);
+            }while(cursor.moveToNext());
+            ((Intervention) entity).setPartsNeededs(partsNeededList);
+        }
+    }
+
+    public void makeIntervention(Cursor cursor, Intervention intervention){
+        Log.d("columnIndex _ID", String.valueOf(cursor.getColumnIndex(_ID)));
+        if (cursor.getColumnIndex(_ID) != -1)intervention.setId(cursor.getLong(cursor.getColumnIndex(_ID)));
+        if (cursor.getColumnIndex(COLUMN_NAME_TITLE) != -1)intervention.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_TITLE)));
+        if (cursor.getColumnIndex(COLUMN_NAME_DESCRIPTION) != -1)intervention.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DESCRIPTION)));
+        if (cursor.getColumnIndex(COLUMN_NAME_DATE) != -1)intervention.setDate(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DATE)));
+        if (cursor.getColumnIndex(COLUMN_NAME_IS_BILLED) != -1)intervention.setBilled(cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_IS_BILLED)) == 1);
+        if (cursor.getColumnIndex(COLUMN_NAME_IS_VALID) != -1)intervention.setValid(cursor.getInt(cursor.getColumnIndex(COLUMN_NAME_IS_VALID)) == 1);
+    }
+
+    public void makeClient(Cursor cursor, Client client){
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Client._ID) != -1)client.setId(cursor.getLong(cursor.getColumnIndex(PhoneRepairManagementContract.Client._ID)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_NAME) != -1)client.setName(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_NAME)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_FIRST_NAME) != -1)client.setFirstName(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_FIRST_NAME)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_EMAIL) != -1)client.setEmail(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_EMAIL)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_PHONE) != -1)client.setPhone(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_PHONE)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_ADDRESS) != -1)client.setAddress(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_ADDRESS)));
+    }
+
+    public void makeParts(Cursor cursor, Part part, PartsNeeded partsNeeded){
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Part._ID) != -1)part.setId(cursor.getLong(cursor.getColumnIndex(PhoneRepairManagementContract.Part._ID)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Part.COLUMN_NAME_NAMING) != -1)part.setNaming(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Part.COLUMN_NAME_NAMING)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Part.COLUMN_NAME_QUANTITY) != -1)part.setQuantity(cursor.getInt(cursor.getColumnIndex(PhoneRepairManagementContract.Part.COLUMN_NAME_QUANTITY)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Part.COLUMN_NAME_BILL_PRICE) != -1)part.setBillPrice(cursor.getDouble(cursor.getColumnIndex(PhoneRepairManagementContract.Part.COLUMN_NAME_BILL_PRICE)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Part.COLUMN_TYPE_DEAL_PRICE) != -1)part.setDealPrice(cursor.getDouble(cursor.getColumnIndex(PhoneRepairManagementContract.Part.COLUMN_NAME_DEAL_PRICE)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Need._ID) != -1)partsNeeded.setId(cursor.getLong(cursor.getColumnIndex(PhoneRepairManagementContract.Need._ID)));
+        if (cursor.getColumnIndex(PhoneRepairManagementContract.Need.COLUMN_NAME_QUANTITY) != -1)partsNeeded.setQuantity(cursor.getInt(cursor.getColumnIndex(PhoneRepairManagementContract.Need.COLUMN_NAME_QUANTITY)));
+        partsNeeded.setPart(part);
     }
 
     @Override
@@ -128,5 +185,11 @@ public class InterventionRepository extends EntityRepository{
         client.setId(cursor.getLong(cursor.getColumnIndex(COLUMN_NAME_ID_CLIENT)));
         client.setName(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_NAME)));
         client.setFirstName(cursor.getString(cursor.getColumnIndex(PhoneRepairManagementContract.Client.COLUMN_NAME_FIRST_NAME)));
+    }
+
+    private void getIntervention(Intervention intervention, String[] interventionArgs, String selection, String[] selectionArgs){
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(TABLE_NAME);
+        queryBuilder.query(database, interventionArgs, selection, selectionArgs, null, null, null);
     }
 }

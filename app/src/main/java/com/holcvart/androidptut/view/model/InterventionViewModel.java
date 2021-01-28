@@ -17,6 +17,12 @@ import com.holcvart.androidptut.model.repository.InterventionRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DATE;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_TITLE;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.SQL_WHERE;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention._ID;
+
 public class InterventionViewModel extends AndroidViewModel {
     private InterventionRepository interventionRepository;
     private MutableLiveData<List<Intervention>> interventions;
@@ -37,7 +43,10 @@ public class InterventionViewModel extends AndroidViewModel {
 
     public void loadInterventions(){
         List<Entity> entities= new ArrayList<>();
-        interventionRepository.findAll(entities);
+        String[] columns = new String[]{_ID, COLUMN_NAME_TITLE, COLUMN_NAME_DATE, COLUMN_NAME_DESCRIPTION};
+        String[] selectionArgs = null;
+        //String selection = SQL_WHERE(selectionArgs);
+        interventionRepository.find2(entities, columns, null, null, null);
         List<Intervention> newInterventions = (List<Intervention>)(List<?>)entities;
         interventions.setValue(newInterventions);
     }

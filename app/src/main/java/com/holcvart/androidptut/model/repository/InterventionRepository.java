@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteQueryBuilder;
 import android.provider.ContactsContract;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
 import com.holcvart.androidptut.model.database.PhoneRepairManagementContract;
 import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.entity.Entity;
@@ -15,8 +18,12 @@ import com.holcvart.androidptut.model.entity.Intervention;
 import com.holcvart.androidptut.model.entity.Part;
 import com.holcvart.androidptut.model.entity.PartsNeeded;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Random;
 
@@ -77,11 +84,11 @@ public class InterventionRepository extends EntityRepository{
         }
     }
 
-    public void find(Entity entity, String[] columns, String selection, String[] selectionArgs){
+    public void find(Entity entity, String[] columns, String selection, String[] selectionArgs, String sortOrder){
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         String tables = SQL_TABLE_LEFT_JOIN_ALL;
         queryBuilder.setTables(tables);
-        Cursor cursor = queryBuilder.query(database, null, selection, selectionArgs, null, null, null);
+        Cursor cursor = queryBuilder.query(database, null, selection, selectionArgs, null, null, sortOrder);
         if (cursor.getCount() == 0)return;
         cursor.moveToNext();
         if (cursor.getColumnIndex(_ID) != -1)makeIntervention(cursor, (Intervention)entity);
@@ -102,7 +109,6 @@ public class InterventionRepository extends EntityRepository{
     }
 
     public void makeIntervention(Cursor cursor, Intervention intervention){
-        Log.d("columnIndex _ID", String.valueOf(cursor.getColumnIndex(_ID)));
         if (cursor.getColumnIndex(_ID) != -1)intervention.setId(cursor.getLong(cursor.getColumnIndex(_ID)));
         if (cursor.getColumnIndex(COLUMN_NAME_TITLE) != -1)intervention.setTitle(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_TITLE)));
         if (cursor.getColumnIndex(COLUMN_NAME_DESCRIPTION) != -1)intervention.setDescription(cursor.getString(cursor.getColumnIndex(COLUMN_NAME_DESCRIPTION)));
@@ -135,10 +141,21 @@ public class InterventionRepository extends EntityRepository{
     public void findAll(List<Entity> entities) {
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(PhoneRepairManagementContract.Intervention.TABLE_NAME);
-        Cursor cursor= queryBuilder.query(database, null, null, null, null, null, null);
+        Cursor cursor= queryBuilder.query(database, null, null, null, null, null, PhoneRepairManagementContract.Intervention.SQL_ORDER_BY_DATE_DESC);
         while(cursor.moveToNext()){
             Intervention intervention= new Intervention();
             createIntervention(cursor, intervention);
+            entities.add(intervention);
+        }
+    }
+
+    public void find2(List<Entity> entities, String[] columns, String selection, String[] selectionArgs, String sortOrder){
+        SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
+        queryBuilder.setTables(PhoneRepairManagementContract.Intervention.TABLE_NAME);
+        Cursor cursor= queryBuilder.query(database, columns, null, null, null, null, PhoneRepairManagementContract.Intervention.SQL_ORDER_BY_DATE_DESC);
+        while(cursor.moveToNext()){
+            Intervention intervention= new Intervention();
+            makeIntervention(cursor, intervention);
             entities.add(intervention);
         }
     }

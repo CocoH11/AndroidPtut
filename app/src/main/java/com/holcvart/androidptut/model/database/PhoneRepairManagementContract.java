@@ -80,6 +80,9 @@ public final class PhoneRepairManagementContract {
                 Client.TABLE_NAME + " LEFT JOIN " + TABLE_NAME + " ON (" + Client._ID + " = " + COLUMN_NAME_ID_CLIENT + ")"
                         + "LEFT JOIN " + Need.TABLE_NAME + " ON (" + _ID + " = " + Need.COLUMN_NAME_ID_INTERVENTION + ")" +" LEFT JOIN " + Part.TABLE_NAME + " ON (" + Need._ID + " = " + Part._ID + ")";
 
+        public static final String SQL_ORDER_BY_DATE_DESC =
+                COLUMN_NAME_DATE + " DESC";
+
         public static String SQL_WHERE(String[] args){
             StringBuilder sql = new StringBuilder();
             if (args.length != 0){

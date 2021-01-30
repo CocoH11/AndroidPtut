@@ -19,6 +19,8 @@ import java.util.List;
 
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DATE;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_TITLE;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.SQL_WHERE;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention._ID;
@@ -44,9 +46,9 @@ public class InterventionViewModel extends AndroidViewModel {
     public void loadInterventions(){
         List<Entity> entities= new ArrayList<>();
         String[] columns = new String[]{_ID, COLUMN_NAME_TITLE, COLUMN_NAME_DATE, COLUMN_NAME_DESCRIPTION};
-        String[] selectionArgs = null;
-        //String selection = SQL_WHERE(selectionArgs);
-        interventionRepository.find2(entities, columns, null, null, null);
+        String[] selectionArgs = new String[]{String.valueOf(1)};
+        String selection = SQL_WHERE(new String[]{COLUMN_NAME_IS_VALID});
+        interventionRepository.find2(entities, columns, selection, selectionArgs, null);
         List<Intervention> newInterventions = (List<Intervention>)(List<?>)entities;
         interventions.setValue(newInterventions);
     }

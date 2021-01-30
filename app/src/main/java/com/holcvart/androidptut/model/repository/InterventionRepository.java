@@ -152,7 +152,7 @@ public class InterventionRepository extends EntityRepository{
     public void find2(List<Entity> entities, String[] columns, String selection, String[] selectionArgs, String sortOrder){
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(PhoneRepairManagementContract.Intervention.TABLE_NAME);
-        Cursor cursor= queryBuilder.query(database, columns, null, null, null, null, PhoneRepairManagementContract.Intervention.SQL_ORDER_BY_DATE_DESC);
+        Cursor cursor= queryBuilder.query(database, columns, selection, selectionArgs, null, null, PhoneRepairManagementContract.Intervention.SQL_ORDER_BY_DATE_DESC);
         while(cursor.moveToNext()){
             Intervention intervention= new Intervention();
             makeIntervention(cursor, intervention);

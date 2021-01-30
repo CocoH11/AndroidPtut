@@ -46,6 +46,7 @@ public final class PhoneRepairManagementContract {
         public final static String COLUMN_NAME_DESCRIPTION = TABLE_NAME + "_" + "description";
         public final static String COLUMN_NAME_IS_VALID = TABLE_NAME + "_" + "isValid";
         public final static String COLUMN_NAME_IS_BILLED = TABLE_NAME + "_" + "isBilled";
+        public final static String COLUMN_NAME_IS_PAYED = TABLE_NAME + "_" + "isPayed";
         public final static String COLUMN_NAME_ID_CLIENT= TABLE_NAME + "_" + "idClient";
 
         public final static String COLUMN_TYPE_TITLE = "TEXT";
@@ -53,6 +54,7 @@ public final class PhoneRepairManagementContract {
         public final static String COLUMN_TYPE_DESCRIPTION = "TEXT";
         public final static String COLUMN_TYPE_IS_VALID = "INTEGER";
         public final static String COLUMN_TYPE_IS_BILLED = "INTEGER";
+        public final static String COLMUN_TYPE_IS_PAYED = "INTEGER";
         public final static String COLUMN_TYPE_ID_CLIENT = "INTEGER";
 
         public static final String SQL_CREATE_TABLE =
@@ -63,6 +65,7 @@ public final class PhoneRepairManagementContract {
                         COLUMN_NAME_DESCRIPTION + " " + COLUMN_TYPE_DESCRIPTION + "," +
                         COLUMN_NAME_IS_BILLED + " " + COLUMN_TYPE_IS_BILLED + "," +
                         COLUMN_NAME_IS_VALID + " " + COLUMN_TYPE_IS_VALID + "," +
+                        COLUMN_NAME_IS_PAYED + " " + COLMUN_TYPE_IS_PAYED + "," +
                         COLUMN_NAME_ID_CLIENT + " " + COLUMN_NAME_ID_CLIENT + "," +
                         "CONSTRAINT " + TABLE_NAME + "_" + Client.TABLE_NAME + "_FK FOREIGN KEY (" + COLUMN_NAME_ID_CLIENT + ") " +
                         "REFERENCES "+ Client.TABLE_NAME +"("+Client._ID+")" +

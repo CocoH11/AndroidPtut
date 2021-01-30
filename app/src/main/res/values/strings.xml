@@ -22,4 +22,7 @@
     <string name="hint_firstname">Prénom</string>
     <string name="hint_phone">0456789900</string>
     <string name="hint_email">jeanjean@gmail.com</string>
+
+    <string name="parts_needed_text">Pièces nécessaires</string>
+    <string name="client_text">Client:</string>
 </resources>

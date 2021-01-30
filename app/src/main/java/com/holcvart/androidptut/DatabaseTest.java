@@ -113,9 +113,9 @@ public class DatabaseTest {
 
     public void insertInterventions(){
         Object[][] interventionsData = {
-                {"Changement écran Galaxy S3", "11-04-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, new Object[][]{{5, 1}, {6, 0}}},
-                {"Changement écran Galaxy S3", "11-05-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, new Object[][]{{5, 1}, {2, 0}}},
-                {"Changement écran Galaxy S3", "11-06-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, new Object[][]{{5, 1}, {4, 0}}},
+                {"Changement écran Galaxy S3", "11-04-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, false, new Object[][]{{5, 1}, {6, 0}}},
+                {"Changement écran Galaxy S3", "11-05-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, false, new Object[][]{{5, 1}, {2, 0}}},
+                {"Changement écran Galaxy S3", "11-06-2000", "Écran tactile qui ne fonctionne plus mais vitre intacte", false, false, false, new Object[][]{{5, 1}, {4, 0}}},
         };
 
         for (Object[] interventionData: interventionsData){
@@ -127,7 +127,7 @@ public class DatabaseTest {
                 PartsNeeded partsNeeded = new PartsNeeded(((Number)partsNeededData[i][0]).intValue(), part);
                 partsNeededList.add(partsNeeded);
             }
-            Intervention intervention = new Intervention((String)interventionData[0], (String)interventionData[1], (String)interventionData[2], (boolean)interventionData[3], (boolean)interventionData[4]);
+            Intervention intervention = new Intervention((String)interventionData[0], (String)interventionData[1], (String)interventionData[2], (boolean)interventionData[3], (boolean)interventionData[4], (boolean)interventionData[5]);
             intervention.setPartsNeededs(partsNeededList);
             interventionRepository.insert(intervention);
         }

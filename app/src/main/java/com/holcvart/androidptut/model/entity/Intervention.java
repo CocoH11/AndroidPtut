@@ -15,35 +15,33 @@ public class Intervention extends Entity{
     private String description;
     private boolean isValid;
     private boolean isBilled;
+    private boolean isPayed;
     private Client client;
     private List<PartsNeeded> partsNeededs;
-
-    public static void findOneBy(SQLiteDatabase database, long id, String tables, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy){
-        Cursor cursor = database.query(tables, columns, selection, selectionArgs, groupBy, having, orderBy);
-    }
 
     public Intervention(){
         super();
         partsNeededs = new ArrayList<>();
     }
 
-    public Intervention(String title, String date, String description, boolean isValid, boolean isBilled){
-        this(title, date, description, isValid, isBilled, null, new ArrayList<PartsNeeded>());
+    public Intervention(String title, String date, String description, boolean isValid, boolean isBilled, boolean isPayed){
+        this(title, date, description, isValid, isBilled, isPayed, null, new ArrayList<PartsNeeded>());
     }
 
-    public Intervention(String title, String date, String description, boolean isValid, boolean isBilled, Client client, List<PartsNeeded> partsNeededs) {
-        this(-1, title, date, description, isValid, isBilled, client, partsNeededs);
+    public Intervention(String title, String date, String description, boolean isValid, boolean isBilled, boolean isPayed, Client client, List<PartsNeeded> partsNeededs) {
+        this(-1, title, date, description, isValid, isBilled, isPayed, client, partsNeededs);
     }
 
-    public Intervention(long id, String title, String date, String description, boolean isValid, boolean isBilled, Client client, List<PartsNeeded> partsNeededs){
+    public Intervention(long id, String title, String date, String description, boolean isValid, boolean isBilled, boolean isPayed, Client client, List<PartsNeeded> partsNeededs){
         super(id);
-        this.title=title;
-        this.date=date;
-        this.description=description;
-        this.isValid=isValid;
-        this.isBilled=isBilled;
-        this.client=client;
-        this.partsNeededs=partsNeededs;
+        this.title = title;
+        this.date = date;
+        this.description = description;
+        this.isValid = isValid;
+        this.isBilled = isBilled;
+        this.isPayed = isPayed;
+        this.client = client;
+        this.partsNeededs = partsNeededs;
     }
 
     public String getTitle() {

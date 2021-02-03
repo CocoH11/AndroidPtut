@@ -1,19 +1,54 @@
 package com.holcvart.androidptut.view.model;
 
+import android.app.Application;
+import android.database.sqlite.SQLiteDatabase;
+
+import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class EstimateViewModel extends ViewModel {
+import com.holcvart.androidptut.model.database.PhoneRepairManagementDBHelper;
+import com.holcvart.androidptut.model.entity.Entity;
+import com.holcvart.androidptut.model.entity.Intervention;
+import com.holcvart.androidptut.model.repository.InterventionRepository;
 
-    private MutableLiveData<String> mText;
+import java.util.ArrayList;
+import java.util.List;
 
-    public EstimateViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is slideshow fragment");
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DATE;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_TITLE;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.SQL_WHERE;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention._ID;
+
+public class EstimateViewModel extends AndroidViewModel {
+
+    private InterventionRepository interventionRepository;
+    private MutableLiveData<List<Intervention>> interventions;
+
+    public EstimateViewModel(Application application) {
+        super(application);
+        SQLiteDatabase database = new PhoneRepairManagementDBHelper(application.getBaseContext()).getWritableDatabase();
+        interventionRepository = new InterventionRepository(database);
     }
 
-    public LiveData<String> getText() {
-        return mText;
+    public MutableLiveData<List<Intervention>> getInterventions() {
+        if (interventions == null){
+            interventions = new MutableLiveData<>();
+            loadInterventions();
+        }
+        return interventions;
+    }
+
+    public void loadInterventions(){
+        List<Entity> entities= new ArrayList<>();
+        String[] columns = new String[]{_ID, COLUMN_NAME_TITLE, COLUMN_NAME_DATE, COLUMN_NAME_DESCRIPTION};
+        String[] selectionArgs = new String[]{String.valueOf(0)};
+        String selection = SQL_WHERE(new String[]{COLUMN_NAME_IS_VALID});
+        interventionRepository.find2(entities, columns, selection, selectionArgs, null);
+        List<Intervention> newInterventions = (List<Intervention>)(List<?>)entities;
+        interventions.setValue(newInterventions);
     }
 }

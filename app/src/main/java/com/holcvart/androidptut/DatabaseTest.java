@@ -120,8 +120,8 @@ public class DatabaseTest {
 
         for (Object[] interventionData: interventionsData){
             List<PartsNeeded> partsNeededList = new ArrayList<PartsNeeded>();
-            for (int i = 0; i < Array.getLength(interventionData[5]); i++) {
-                Object[][] partsNeededData = (Object[][])interventionData[5];
+            for (int i = 0; i < Array.getLength(interventionData[6]); i++) {
+                Object[][] partsNeededData = (Object[][])interventionData[6];
                 Part part = new Part();
                 partRepository.findOneById(((Number)partsNeededData[i][1]).longValue(), part, null);
                 PartsNeeded partsNeeded = new PartsNeeded(((Number)partsNeededData[i][0]).intValue(), part);

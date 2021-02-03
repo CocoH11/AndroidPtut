@@ -2,7 +2,6 @@ package com.holcvart.androidptut.view.fragment;
 
 import android.os.Bundle;
 
-import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
@@ -11,11 +10,9 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,16 +22,11 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
-import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.entity.Intervention;
-import com.holcvart.androidptut.view.model.ClientDetailViewModel;
 import com.holcvart.androidptut.view.model.InterventionDetailsViewModel;
-import com.holcvart.androidptut.view.recycler_view.InterventionListAdapter;
 import com.holcvart.androidptut.view.recycler_view.PartsListAdapter;
 
-import java.util.List;
-
-public class InterventionDetailsFragment extends Fragment implements View.OnClickListener , Observer<Intervention> {
+public class InterventionDetailsFragment extends Fragment implements View.OnClickListener, Observer<Intervention> {
     private InterventionDetailsViewModel interventionDetailsViewModel;
     private TextView textViewDescription;
     private FloatingActionButton floatingActionButton;
@@ -53,7 +45,7 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                Navigation.findNavController(getView()).navigate(R.id.action_nav_intervention_details_to_nav_intervention);
+                NavHostFragment.findNavController(this).navigate(R.id.action_nav_intervention_details_to_nav_intervention);
                 break;
         }
         return false;
@@ -79,12 +71,7 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
     }
 
     private void customizeFloatingActionButton(){
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                navToUpdateView(getView());
-            }
-        });
+        floatingActionButton.setOnClickListener(this);
     }
 
     private void customizeActionBar(){
@@ -93,18 +80,14 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
     }
 
     private void customizeBackNavigation(){
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                NavHostFragment.findNavController(getInterventionDetailsFragment()).navigate(R.id.action_nav_intervention_details_to_nav_intervention);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, new CustomBackPressed(true, this, R.id.action_nav_intervention_details_to_nav_intervention));
     }
 
     @Override
     public void onClick(View v) {
-
+        if (v.getId() == floatingActionButton.getId()){
+            navToUpdateView(getView());
+        }
     }
 
     public void navToUpdateView(View view) {
@@ -118,12 +101,7 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
     public void onChanged(Intervention intervention) {
         if (mIntervention == null)mIntervention = intervention;
         customizeActionBar();
-        System.out.println(mIntervention.getTitle());
         textViewDescription.setText(mIntervention.getDescription());
         recyclerView.setAdapter(new PartsListAdapter(mIntervention.getPartsNeededs()));
-    }
-
-    public InterventionDetailsFragment getInterventionDetailsFragment(){
-        return this;
     }
 }

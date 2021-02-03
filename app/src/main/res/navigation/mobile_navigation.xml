@@ -28,7 +28,14 @@
         android:id="@+id/nav_estimate"
         android:name="com.holcvart.androidptut.view.fragment.EstimateFragment"
         android:label="@string/menu_estimate"
-        tools:layout="@layout/fragment_estimate" />
+        tools:layout="@layout/fragment_estimate" >
+        <action
+            android:id="@+id/action_nav_estimate_to_nav_estimate_details"
+            app:destination="@id/nav_estimate_details" />
+        <action
+            android:id="@+id/action_nav_estimate_to_nav_estimate_create"
+            app:destination="@id/nav_estimate_create" />
+    </fragment>
     <fragment
         android:id="@+id/nav_order"
         android:name="com.holcvart.androidptut.view.fragment.OrderFragment"
@@ -91,4 +98,21 @@
             android:id="@+id/action_nav_intervention_create_to_nav_intervention_details"
             app:destination="@id/nav_intervention_details" />
     </fragment>
+    <fragment
+        android:id="@+id/nav_estimate_details"
+        android:name="com.holcvart.androidptut.view.fragment.EstimateDetailsFragment"
+        android:label="estimate_details_fragment"
+        tools:layout="@layout/estimate_details_fragment" >
+        <action
+            android:id="@+id/action_nav_estimate_details_to_nav_estimate_create"
+            app:destination="@id/nav_estimate_create" />
+        <action
+            android:id="@+id/action_nav_estimate_details_to_nav_estimate"
+            app:destination="@id/nav_estimate" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_estimate_create"
+        android:name="com.holcvart.androidptut.view.fragment.EstimateCreateFragment"
+        android:label="estimate_create_fragment"
+        tools:layout="@layout/estimate_create_fragment" />
 </navigation>

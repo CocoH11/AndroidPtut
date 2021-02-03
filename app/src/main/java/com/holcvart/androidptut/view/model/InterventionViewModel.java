@@ -19,6 +19,7 @@ import java.util.List;
 
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DATE;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_ID_CLIENT;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_TITLE;
@@ -36,20 +37,20 @@ public class InterventionViewModel extends AndroidViewModel {
     }
 
     public MutableLiveData<List<Intervention>> getInterventions() {
-        if (interventions == null){
+        if (interventions == null) {
             interventions = new MutableLiveData<>();
             loadInterventions();
         }
         return interventions;
     }
 
-    public void loadInterventions(){
-        List<Entity> entities= new ArrayList<>();
-        String[] columns = new String[]{_ID, COLUMN_NAME_TITLE, COLUMN_NAME_DATE, COLUMN_NAME_DESCRIPTION};
-        String[] selectionArgs = new String[]{String.valueOf(1)};
+    public void loadInterventions() {
+        List<Entity> entities = new ArrayList<>();
+        String[] columns = new String[]{_ID, COLUMN_NAME_TITLE, COLUMN_NAME_DATE, COLUMN_NAME_DESCRIPTION, COLUMN_NAME_ID_CLIENT};
+        String[] selectionArgs = new String[]{String.valueOf(0)};
         String selection = SQL_WHERE(new String[]{COLUMN_NAME_IS_VALID});
         interventionRepository.find2(entities, columns, selection, selectionArgs, null);
-        List<Intervention> newInterventions = (List<Intervention>)(List<?>)entities;
+        List<Intervention> newInterventions = (List<Intervention>) (List<?>) entities;
         interventions.setValue(newInterventions);
     }
 }

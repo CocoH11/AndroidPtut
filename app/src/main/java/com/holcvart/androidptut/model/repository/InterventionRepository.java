@@ -88,7 +88,7 @@ public class InterventionRepository extends EntityRepository{
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         String tables = SQL_TABLE_LEFT_JOIN_ALL;
         queryBuilder.setTables(tables);
-        Cursor cursor = queryBuilder.query(database, null, selection, selectionArgs, null, null, sortOrder);
+        Cursor cursor = queryBuilder.query(database, columns, selection, selectionArgs, null, null, sortOrder);
         if (cursor.getCount() == 0)return;
         cursor.moveToNext();
         if (cursor.getColumnIndex(_ID) != -1)makeIntervention(cursor, (Intervention)entity);

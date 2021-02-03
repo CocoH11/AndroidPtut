@@ -104,13 +104,7 @@ public class ClientDetailsFragment extends Fragment implements Observer<Client>,
     }
 
     private void customizeBackNavigation(){
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                NavHostFragment.findNavController(getClientDetailsFragment()).navigate(R.id.action_nav_client_details_to_nav_client);
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, new CustomBackPressed(true, this, R.id.action_nav_client_details_to_nav_client));
     }
 
     @Override

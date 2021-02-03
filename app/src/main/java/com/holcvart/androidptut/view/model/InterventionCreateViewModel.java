@@ -52,9 +52,11 @@ public class InterventionCreateViewModel extends AndroidViewModel {
     public void loadIntervention(long id){
         Intervention newIntervention = new Intervention();
         Map<String, String[]> args = new HashMap<>();
-        //args.put("client", new String[]{"firstName", "name"});
         if (id != -1) interventionRepository.findOneById(id, newIntervention, args);
-        else newIntervention.setId(id);
+        else {
+            newIntervention.setId(id);
+            newIntervention.setClient(new Client());
+        }
         intervention.setValue(newIntervention);
     }
 

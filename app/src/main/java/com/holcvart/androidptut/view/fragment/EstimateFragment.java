@@ -70,6 +70,11 @@ public class EstimateFragment extends Fragment implements View.OnClickListener, 
         NavHostFragment.findNavController(this).navigate(R.id.action_nav_estimate_to_nav_estimate_details, bundle);
     }
 
+    public void validateEstimation(int position){
+        mViewModel.validate(position, recyclerView.getAdapter().getItemId(position));
+        mViewModel.reloadInterventions();
+    }
+
     @Override
     public void onChanged(List<Intervention> interventions) {
         if(mInterventions == null)mInterventions = interventions;
@@ -78,9 +83,7 @@ public class EstimateFragment extends Fragment implements View.OnClickListener, 
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == floatingActionButton.getId()){
-            NavHostFragment.findNavController(this).navigate(R.id.action_nav_estimate_to_nav_estimate_create);
-        }
+        if (v.getId() == floatingActionButton.getId())NavHostFragment.findNavController(this).navigate(R.id.action_nav_estimate_to_nav_estimate_create);
     }
 
     @Override

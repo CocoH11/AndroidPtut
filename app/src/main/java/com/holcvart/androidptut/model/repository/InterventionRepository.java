@@ -178,12 +178,16 @@ public class InterventionRepository extends EntityRepository{
     public void update(Entity entity) {
         Intervention intervention = (Intervention)entity;
         ContentValues values= new ContentValues();
-        values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_TITLE, intervention.getTitle());
-        values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_DATE, intervention.getDate());
-        values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION, intervention.getDescription());
-        values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID, intervention.isValid());
-        values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED, intervention.isBilled());
-        values.put(COLUMN_NAME_ID_CLIENT, intervention.getClient().getId());
+        if (intervention.getTitle() != null) values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_TITLE, intervention.getTitle());
+        if (intervention.getDate() != null) values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_DATE, intervention.getDate());
+        if (intervention.getDescription() != null) values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION, intervention.getDescription());
+        if (intervention.isValid()) values.put(COLUMN_NAME_IS_VALID, 1);
+        else values.put(COLUMN_NAME_IS_VALID, 0);
+        if (intervention.getClient() != null){
+            values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID, intervention.isValid());
+            values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED, intervention.isBilled());
+            values.put(COLUMN_NAME_ID_CLIENT, intervention.getClient().getId());
+        }
         int result = database.update(PhoneRepairManagementContract.Intervention.TABLE_NAME, values, PhoneRepairManagementContract.Intervention._ID + " = ?", new String[]{String.valueOf(intervention.getId())});
     }
 

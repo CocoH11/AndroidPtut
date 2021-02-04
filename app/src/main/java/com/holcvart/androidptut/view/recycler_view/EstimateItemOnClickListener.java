@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.view.fragment.EstimateFragment;
 import com.holcvart.androidptut.view.fragment.InterventionFragment;
 
@@ -17,6 +18,7 @@ public class EstimateItemOnClickListener implements View.OnClickListener {
     }
     @Override
     public void onClick(View v) {
-        estimateFragment.navToDetailedView(v, position);
+        if (v.getId() == R.id.buttonEstimateValidate) estimateFragment.validateEstimation(position);
+        else estimateFragment.navToDetailedView(v, position);
     }
 }

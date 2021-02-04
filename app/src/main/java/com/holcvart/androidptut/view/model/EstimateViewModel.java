@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 
 import com.holcvart.androidptut.model.database.PhoneRepairManagementDBHelper;
@@ -50,5 +51,16 @@ public class EstimateViewModel extends AndroidViewModel {
         interventionRepository.find2(entities, columns, selection, selectionArgs, null);
         List<Intervention> newInterventions = (List<Intervention>)(List<?>)entities;
         interventions.setValue(newInterventions);
+    }
+
+    public void reloadInterventions(){
+        interventions.setValue(interventions.getValue());
+    }
+
+    public void validate(int position, long id){
+        Intervention intervention = interventions.getValue().get(position);
+        intervention.setValid(true);
+        interventionRepository.update(intervention);
+        interventions.getValue().remove(position);
     }
 }

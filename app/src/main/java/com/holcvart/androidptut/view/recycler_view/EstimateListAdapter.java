@@ -6,15 +6,17 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView.ViewHolder;
 
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Intervention;
 import com.holcvart.androidptut.view.fragment.EstimateFragment;
 import com.holcvart.androidptut.view.fragment.InterventionFragment;
+import com.holcvart.androidptut.view.model.EstimateDetailsViewModel;
 
 import java.util.List;
 
-public class EstimateListAdapter extends RecyclerView.Adapter {
+public class EstimateListAdapter extends RecyclerView.Adapter{
     private List<Intervention> interventions;
     private EstimateFragment estimateFragment;
 
@@ -25,15 +27,18 @@ public class EstimateListAdapter extends RecyclerView.Adapter {
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
         return new EstimateRecyclerViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ((EstimateRecyclerViewHolder)holder).setDetails(interventions.get(position));
-        ((EstimateRecyclerViewHolder)holder).itemView.setOnClickListener(new EstimateItemOnClickListener(position, estimateFragment));
+        View.OnClickListener clickedListener = new EstimateItemOnClickListener(position, estimateFragment);
+        ((EstimateRecyclerViewHolder)holder).itemView.setOnClickListener(clickedListener);
+        ((EstimateRecyclerViewHolder)holder).itemView.findViewById(R.id.buttonEstimateValidate).setOnClickListener(clickedListener);
+
     }
 
     @Override

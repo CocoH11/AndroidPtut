@@ -21,6 +21,8 @@ public class Intervention extends Entity{
 
     public Intervention(){
         super();
+        isValid = false;
+        isBilled = false;
         partsNeededs = new ArrayList<>();
     }
 

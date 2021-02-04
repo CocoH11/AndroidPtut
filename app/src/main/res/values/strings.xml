@@ -25,4 +25,5 @@
 
     <string name="parts_needed_text">Pièces nécessaires</string>
     <string name="client_text">Client:</string>
+    <string name="button_estimate_validate_text">Valider</string>
 </resources>

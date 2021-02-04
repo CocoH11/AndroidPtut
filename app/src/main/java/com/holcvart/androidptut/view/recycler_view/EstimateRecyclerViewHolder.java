@@ -1,6 +1,7 @@
 package com.holcvart.androidptut.view.recycler_view;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,4 +27,5 @@ public class EstimateRecyclerViewHolder extends RecyclerView.ViewHolder {
         textViewDate.setText(intervention.getDate());
         textViewDescription.setText(intervention.getDescription());
     }
+
 }

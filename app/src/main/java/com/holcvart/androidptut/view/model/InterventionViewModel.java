@@ -47,7 +47,7 @@ public class InterventionViewModel extends AndroidViewModel {
     public void loadInterventions() {
         List<Entity> entities = new ArrayList<>();
         String[] columns = new String[]{_ID, COLUMN_NAME_TITLE, COLUMN_NAME_DATE, COLUMN_NAME_DESCRIPTION, COLUMN_NAME_ID_CLIENT};
-        String[] selectionArgs = new String[]{String.valueOf(0)};
+        String[] selectionArgs = new String[]{String.valueOf(1)};
         String selection = SQL_WHERE(new String[]{COLUMN_NAME_IS_VALID});
         interventionRepository.find2(entities, columns, selection, selectionArgs, null);
         List<Intervention> newInterventions = (List<Intervention>) (List<?>) entities;

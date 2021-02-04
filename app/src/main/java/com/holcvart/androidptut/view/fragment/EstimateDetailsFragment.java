@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Intervention;
 import com.holcvart.androidptut.view.model.EstimateDetailsViewModel;
+import com.holcvart.androidptut.view.recycler_view.PartsListAdapter;
 
 public class EstimateDetailsFragment extends Fragment implements View.OnClickListener, Observer<Intervention> {
     private EstimateDetailsViewModel mViewModel;
@@ -29,6 +31,7 @@ public class EstimateDetailsFragment extends Fragment implements View.OnClickLis
     private TextView textViewDescription;
     private TextView textViewClientName;
     private TextView textViewClientFirstName;
+    private RecyclerView recyclerView;
     private Intervention intervention;
     private ActionBar actionBar;
     private FloatingActionButton floatingActionButton;
@@ -61,8 +64,12 @@ public class EstimateDetailsFragment extends Fragment implements View.OnClickLis
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
         actionBar = ((MainActivity)requireActivity()).getSupportActionBar();
+        textViewDescription = (TextView) view.findViewById(R.id.textViewEstimateDetailsDescription);
+        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewEstimatePartsList);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
         customizeFloatingActionButton();
-
+        mViewModel.getIntervention(getArguments().getLong("interventionId")).observe(getViewLifecycleOwner(), this);
     }
 
     private void customizeFloatingActionButton(){
@@ -96,5 +103,7 @@ public class EstimateDetailsFragment extends Fragment implements View.OnClickLis
     public void onChanged(Intervention intervention) {
         if (this.intervention == null)this.intervention = intervention;
         customizeActionBar();
+        textViewDescription.setText(intervention.getDescription());
+        recyclerView.setAdapter(new PartsListAdapter(intervention.getPartsNeededs()));
     }
 }

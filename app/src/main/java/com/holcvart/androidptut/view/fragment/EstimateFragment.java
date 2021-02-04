@@ -1,6 +1,8 @@
 package com.holcvart.androidptut.view.fragment;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +49,7 @@ public class EstimateFragment extends Fragment implements View.OnClickListener, 
         View root = inflater.inflate(R.layout.fragment_estimate, container, false);
         recyclerView = root.findViewById(R.id.estimateRecyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
+        onConfigurationChanged(getActivity().getResources().getConfiguration());
         mViewModel.getInterventions().observe(getViewLifecycleOwner(), this);
         return root;
     }
@@ -78,6 +80,16 @@ public class EstimateFragment extends Fragment implements View.OnClickListener, 
     public void onClick(View v) {
         if (v.getId() == floatingActionButton.getId()){
             NavHostFragment.findNavController(this).navigate(R.id.action_nav_estimate_to_nav_estimate_create);
+        }
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
         }
     }
 }

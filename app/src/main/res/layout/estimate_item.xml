@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         android:textColor="@color/black"
-        android:textSize="24sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitleEstimate" />
 
@@ -31,8 +32,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
         android:text="TextView"
+        android:gravity="fill"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.05"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewTitleEstimate" />
 </androidx.constraintlayout.widget.ConstraintLayout>

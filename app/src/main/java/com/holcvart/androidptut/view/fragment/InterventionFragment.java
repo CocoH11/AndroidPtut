@@ -4,6 +4,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -44,7 +45,7 @@ public class InterventionFragment extends Fragment implements View.OnClickListen
         View root = inflater.inflate(R.layout.intervention_fragment, container, false);
         recyclerView = root.findViewById(R.id.interventionRecyclerView);
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new GridLayoutManager(root.getContext(), 2));
+        onConfigurationChanged(getActivity().getResources().getConfiguration());
         mViewModel.getInterventions().observe(getViewLifecycleOwner(), this);
         return root;
     }
@@ -76,5 +77,15 @@ public class InterventionFragment extends Fragment implements View.OnClickListen
     public void onChanged(List<Intervention> interventions) {
         if(mInterventions == null)mInterventions = interventions;
         recyclerView.setAdapter(new InterventionListAdapter(mInterventions, this));
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        }
     }
 }

@@ -50,7 +50,7 @@ public class EstimateDetailsViewModel extends AndroidViewModel {
 
                 PhoneRepairManagementContract.Part._ID,
                 PhoneRepairManagementContract.Part.COLUMN_NAME_NAMING,
-                PhoneRepairManagementContract.Part.COLUMN_TYPE_BILL_PRICE,
+                PhoneRepairManagementContract.Part.COLUMN_NAME_BILL_PRICE,
 
                 PhoneRepairManagementContract.Need._ID,
                 PhoneRepairManagementContract.Need.COLUMN_NAME_QUANTITY

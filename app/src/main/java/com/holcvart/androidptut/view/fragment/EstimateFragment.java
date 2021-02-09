@@ -2,10 +2,13 @@ package com.holcvart.androidptut.view.fragment;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -90,9 +94,9 @@ public class EstimateFragment extends Fragment implements View.OnClickListener, 
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         }
     }
 }

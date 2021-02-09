@@ -9,12 +9,12 @@
 
     <TextView
         android:id="@+id/textViewEstimateDetailsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
-        android:text="TextView"
+        android:layout_width="240dp"
+        android:layout_height="22dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/defaultTextViewName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -22,23 +22,23 @@
         android:id="@+id/textViewEstimateDetailsDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="24dp"
         android:width="250dp"
         android:gravity="fill"
-        android:text="TextView"
+        android:text="@string/defaultTextViewName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEstimateDetailsTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewEstimatePartsList" />
 
     <TextView
         android:id="@+id/textView33"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="272dp"
         android:text="@string/parts_needed_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.193"
+        app:layout_constraintHorizontal_bias="0.189"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView44" />
 
@@ -55,33 +55,196 @@
         android:id="@+id/textView44"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="20dp"
         android:text="@string/client_text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEstimateDetailsDescription" />
-
-    <TextView
-        android:id="@+id/textViewEstimateDetailsClientFirstName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="28dp"
-        android:text="TextView"
-        app:layout_constraintStart_toEndOf="@+id/textView44"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEstimateDetailsDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewEstimateDetailsTitle" />
 
     <TextView
         android:id="@+id/textViewDetailsClientName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="28dp"
-        android:text="TextView"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/defaultTextViewName"
         app:layout_constraintStart_toEndOf="@+id/textViewEstimateDetailsClientFirstName"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEstimateDetailsDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewEstimateDetailsTitle" />
+
+    <TextView
+        android:id="@+id/textViewEstimateDetailsClientFirstName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/defaultTextViewName"
+        app:layout_constraintStart_toEndOf="@+id/textView44"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEstimateDetailsTitle" />
+
+    <TextView
+        android:id="@+id/textViewAdresse"
+        android:layout_width="57dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/adresse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView44" />
+
+    <TextView
+        android:id="@+id/textViewDetailAdresseClient"
+        android:layout_width="285dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/defaultTextViewName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.703"
+        app:layout_constraintStart_toEndOf="@+id/textViewAdresse"
+        app:layout_constraintTop_toBottomOf="@+id/textView44" />
+
+    <TextView
+        android:id="@+id/textViewCP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/string_code_postal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAdresse" />
+
+    <TextView
+        android:id="@+id/textViewDetailClientCodePostal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/defaultTextViewName"
+        app:layout_constraintStart_toEndOf="@+id/textViewCP"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDetailAdresseClient" />
+
+    <TextView
+        android:id="@+id/textViewVille"
+        android:layout_width="34dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/string_ville"
+        app:layout_constraintStart_toEndOf="@+id/textViewDetailClientCodePostal"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDetailAdresseClient" />
+
+    <TextView
+        android:id="@+id/textViewDetailClientVille"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/defaultTextViewName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.709"
+        app:layout_constraintStart_toEndOf="@+id/textViewVille"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDetailAdresseClient" />
+
+    <TextView
+        android:id="@+id/textViewTelephone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_tel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewCP" />
+
+    <TextView
+        android:id="@+id/textViewDetailClientTelephone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="67dp"
+        android:layout_marginLeft="67dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/defaultTextViewName"
+        app:layout_constraintStart_toEndOf="@+id/textViewTelephone"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDetailClientCodePostal" />
+
+    <TextView
+        android:id="@+id/textViewPortable"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="21dp"
+        android:layout_marginLeft="21dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:text="@string/text_portable"
+        app:layout_constraintEnd_toStartOf="@+id/textViewDetailClientPortable"
+        app:layout_constraintStart_toEndOf="@+id/textViewDetailClientTelephone"
+        app:layout_constraintTop_toBottomOf="@+id/textViewVille" />
+
+    <TextView
+        android:id="@+id/textViewDetailClientPortable"
+        android:layout_width="135dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/defaultTextViewName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewDetailClientVille" />
+
+    <TextView
+        android:id="@+id/textViewReferenceInternet"
+        android:layout_width="148dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_references_internet"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewTelephone" />
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="204dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginLeft="27dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/defaultTextViewName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewReferenceInternet"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPortable" />
+
+    <TextView
+        android:id="@+id/textViewNumSiret"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/text_num_siret"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewReferenceInternet" />
+
+    <TextView
+        android:id="@+id/textViewDetailClientNumSiret"
+        android:layout_width="285dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/defaultTextViewName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textViewNumSiret"
+        app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

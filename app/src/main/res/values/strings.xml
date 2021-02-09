@@ -34,4 +34,7 @@
     <string name="text_portable">Portable :</string>
     <string name="text_references_internet">Références Internet :</string>
     <string name="text_num_siret">N° Siret :</string>
+    <string name="text_reference">Référence :</string>
+    <string name="text_date">Date :</string>
+    <string name="text_num_client">N° Client :</string>
 </resources>

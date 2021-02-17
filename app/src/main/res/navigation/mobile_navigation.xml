@@ -156,6 +156,6 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.holcvart.androidptut.view.fragment.SettingsFragment"
+        android:name="com.holcvart.androidptut.view.SettingsActivity"
         android:label="SettingsFragment" />
 </navigation>

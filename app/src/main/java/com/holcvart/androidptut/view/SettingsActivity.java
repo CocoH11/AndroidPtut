@@ -1,5 +1,6 @@
-package com.holcvart.androidptut.view.fragment;
+package com.holcvart.androidptut.view;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,14 +11,25 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.holcvart.androidptut.DatabaseTest;
 import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
+import com.holcvart.androidptut.model.database.PhoneRepairManagementDBHelper;
 
 
-public class SettingsFragment extends Fragment {
+public class SettingsActivity extends AppCompatActivity implements View.OnClickListener{
 
     private FloatingActionButton floatingActionButton;
     private ActionBar actionBar;
@@ -34,21 +46,12 @@ public class SettingsFragment extends Fragment {
     private Button buttonSaveSettings;
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
-        floatingActionButton.hide();
-        actionBar = ((MainActivity)requireActivity()).getSupportActionBar();
-        customizeActionBar();
-        View root = inflater.inflate(R.layout.settings_fragment, container, false);
-        onConfigurationChanged(getActivity().getResources().getConfiguration());
-//        buttonSaveSettings.findViewById(R.id.buttonSettingEntrepriseSave);
-//        buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                saveDataApplication(v);
-//            }
-//        });
-        return root;
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.settings_fragment);
+
+        buttonSaveSettings = this.findViewById(R.id.buttonSettingEntrepriseSave);
+        buttonSaveSettings.setOnClickListener(this);
     }
 
     private void saveDataApplication(View view) {
@@ -67,9 +70,14 @@ public class SettingsFragment extends Fragment {
     }
 
 
-    private void customizeActionBar(){
-        actionBar.setSubtitle(null);
+
+    @Override
+    public void onClick(View v) {
+        saveDataApplication(v);
     }
 
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
 
+    }
 }

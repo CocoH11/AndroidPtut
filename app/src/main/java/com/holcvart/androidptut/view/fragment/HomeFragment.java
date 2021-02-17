@@ -3,6 +3,7 @@ package com.holcvart.androidptut.view.fragment;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,6 +22,7 @@ import androidx.navigation.Navigation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
+import com.holcvart.androidptut.view.SettingsActivity;
 import com.holcvart.androidptut.view.model.HomeViewModel;
 
 public class HomeFragment extends Fragment {
@@ -50,12 +52,10 @@ public class HomeFragment extends Fragment {
 
                     .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
-                            Bundle bundle = new Bundle();
-                            Navigation.findNavController(root).navigate(R.id.action_nav_home_to_nav_settings,bundle);
+                            Intent intent = new Intent(getContext(), SettingsActivity.class);
+                            startActivity(intent);
                         }
                     })
-
-                    // A null listener allows the button to dismiss the dialog and take no further action.
                     .setNegativeButton("Non", null)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();

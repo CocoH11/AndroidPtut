@@ -1,5 +1,6 @@
 package com.holcvart.androidptut;
 
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,6 +12,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.holcvart.androidptut.model.database.PhoneRepairManagementDBHelper;
+import com.holcvart.androidptut.view.SettingsActivity;
 
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -82,7 +84,8 @@ public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuIt
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-        Toast.makeText(getBaseContext(), "You just clicked on settings menu item", (int)2).show();
+        Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+        startActivity(intent);
         return true;
     }
 

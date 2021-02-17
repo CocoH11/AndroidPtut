@@ -58,7 +58,9 @@ public class InterventionRepository extends EntityRepository{
             ContentValues partValues = new ContentValues();
             partValues.put(PhoneRepairManagementContract.Need.COLUMN_NAME_QUANTITY, partsNeeded.getQuantity());
             partValues.put(PhoneRepairManagementContract.Need.COLUMN_NAME_ID_INTERVENTION, intervention.getId());
+            partValues.put(PhoneRepairManagementContract.Need.COLUMN_NAME_ID_PART, partsNeeded.getPart().getId());
             partsNeeded.setId(database.insert(PhoneRepairManagementContract.Need.TABLE_NAME, null, partValues));
+            //database.insert(PhoneRepairManagementContract.Need.TABLE_NAME, null, partValues);
             partsNeeded.setIntervention(intervention);
         }
     }
@@ -152,7 +154,7 @@ public class InterventionRepository extends EntityRepository{
     public void find2(List<Entity> entities, String[] columns, String selection, String[] selectionArgs, String sortOrder){
         SQLiteQueryBuilder queryBuilder = new SQLiteQueryBuilder();
         queryBuilder.setTables(PhoneRepairManagementContract.Intervention.TABLE_NAME);
-        Cursor cursor= queryBuilder.query(database, columns, selection, selectionArgs, null, null, PhoneRepairManagementContract.Intervention.SQL_ORDER_BY_DATE_DESC);
+        Cursor cursor= queryBuilder.query(database, columns, selection, selectionArgs, null, null, sortOrder);
         while(cursor.moveToNext()){
             Intervention intervention= new Intervention();
             makeIntervention(cursor, intervention);
@@ -187,6 +189,15 @@ public class InterventionRepository extends EntityRepository{
             values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID, intervention.isValid());
             values.put(PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_BILLED, intervention.isBilled());
             values.put(COLUMN_NAME_ID_CLIENT, intervention.getClient().getId());
+        }
+        if (intervention.getPartsNeededs() != null){
+            for (PartsNeeded parts : intervention.getPartsNeededs()) {
+                ContentValues partsValues = new ContentValues();
+                partsValues.put(PhoneRepairManagementContract.Need.COLUMN_NAME_QUANTITY, parts.getQuantity());
+                partsValues.put(PhoneRepairManagementContract.Need.COLUMN_NAME_ID_INTERVENTION, intervention.getId());
+                partsValues.put(PhoneRepairManagementContract.Need.COLUMN_NAME_ID_PART, parts.getPart().getId());
+                database.update(PhoneRepairManagementContract.Need.TABLE_NAME, partsValues, PhoneRepairManagementContract.Need._ID + " = ?", new String[]{String.valueOf(parts.getId())});
+            }
         }
         int result = database.update(PhoneRepairManagementContract.Intervention.TABLE_NAME, values, PhoneRepairManagementContract.Intervention._ID + " = ?", new String[]{String.valueOf(intervention.getId())});
     }

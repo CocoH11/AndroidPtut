@@ -1,5 +1,6 @@
 package com.holcvart.androidptut.view.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,20 +18,28 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Intervention;
+import com.holcvart.androidptut.model.entity.PartsNeeded;
 import com.holcvart.androidptut.view.model.InterventionDetailsViewModel;
-import com.holcvart.androidptut.view.recycler_view.PartsListAdapter;
 
 public class InterventionDetailsFragment extends Fragment implements View.OnClickListener, Observer<Intervention> {
     private InterventionDetailsViewModel interventionDetailsViewModel;
+    private TextView textViewTitle;
     private TextView textViewDescription;
+    private TextView textViewDate;
+    private TextView textViewClientFirstName;
+    private TextView textViewClientName;
+    private TextView textViewClientPhone;
     private FloatingActionButton floatingActionButton;
     private RecyclerView recyclerView;
+    private TableLayout tableLayout;
     private ActionBar actionBar;
     private Intervention mIntervention;
 
@@ -62,10 +71,13 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
         actionBar = ((MainActivity)requireActivity()).getSupportActionBar();
+        textViewTitle = (TextView) view.findViewById(R.id.textViewInterventionDetailsTitle);
+        textViewDate = (TextView) view.findViewById(R.id.textViewInterventionDetailsDate);
         textViewDescription=(TextView)view.findViewById(R.id.textViewInterventionDetailsDescription);
-        recyclerView = (RecyclerView)view.findViewById(R.id.recyclerViewPartsList);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getView().getContext()));
+        textViewClientFirstName = (TextView) view.findViewById(R.id.textViewInterventionDetailsClientFirstName);
+        textViewClientName = (TextView) view.findViewById(R.id.textViewInterventionDetailsClientName);
+        textViewClientPhone = (TextView) view.findViewById(R.id.textViewInterventionDetailsClientPhone);
+        tableLayout = (TableLayout)view.findViewById(R.id.interventionPartTable);
         customizeFloatingActionButton();
         interventionDetailsViewModel.getIntervention(getArguments().getLong("interventionId")).observe(getViewLifecycleOwner(), this);
     }
@@ -101,7 +113,18 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
     public void onChanged(Intervention intervention) {
         if (mIntervention == null)mIntervention = intervention;
         customizeActionBar();
+        textViewTitle.setText(mIntervention.getTitle());
+        textViewDate.setText(mIntervention.getDate());
         textViewDescription.setText(mIntervention.getDescription());
-        recyclerView.setAdapter(new PartsListAdapter(mIntervention.getPartsNeededs()));
+        textViewClientFirstName.setText(mIntervention.getClient().getFirstName());
+        textViewClientName.setText(mIntervention.getClient().getName());
+        textViewClientPhone.setText(mIntervention.getClient().getPhone());
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        for (PartsNeeded parts : mIntervention.getPartsNeededs()) {
+            TableRow row = (TableRow) inflater.inflate(R.layout.intervention_part_table_row, null);
+            ((TextView)row.findViewById(R.id.textViewNaming2)).setText(parts.getPart().getNaming());
+            ((TextView)row.findViewById(R.id.textViewQuantity2)).setText(String.valueOf(parts.getQuantity()));
+            tableLayout.addView(row);
+        }
     }
 }

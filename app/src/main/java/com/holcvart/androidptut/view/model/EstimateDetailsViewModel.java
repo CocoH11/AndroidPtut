@@ -47,6 +47,7 @@ public class EstimateDetailsViewModel extends AndroidViewModel {
                 PhoneRepairManagementContract.Client._ID,
                 PhoneRepairManagementContract.Client.COLUMN_NAME_NAME,
                 PhoneRepairManagementContract.Client.COLUMN_NAME_FIRST_NAME,
+                PhoneRepairManagementContract.Client.COLUMN_NAME_PHONE,
 
                 PhoneRepairManagementContract.Part._ID,
                 PhoneRepairManagementContract.Part.COLUMN_NAME_NAMING,

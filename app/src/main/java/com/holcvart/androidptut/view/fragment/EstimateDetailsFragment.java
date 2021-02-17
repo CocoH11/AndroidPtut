@@ -1,5 +1,6 @@
 package com.holcvart.androidptut.view.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,22 +17,26 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Intervention;
+import com.holcvart.androidptut.model.entity.PartsNeeded;
 import com.holcvart.androidptut.view.model.EstimateDetailsViewModel;
-import com.holcvart.androidptut.view.recycler_view.PartsListAdapter;
 
 public class EstimateDetailsFragment extends Fragment implements View.OnClickListener, Observer<Intervention> {
     private EstimateDetailsViewModel mViewModel;
     private TextView textViewTitle;
+    private TextView textViewDateIntervention;
     private TextView textViewDescription;
     private TextView textViewClientName;
     private TextView textViewClientFirstName;
-    private RecyclerView recyclerView;
+    private TextView textViewClientPhone;
+    private TableLayout tableLayout;
     private Intervention intervention;
     private ActionBar actionBar;
     private FloatingActionButton floatingActionButton;
@@ -65,9 +70,12 @@ public class EstimateDetailsFragment extends Fragment implements View.OnClickLis
         floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
         actionBar = ((MainActivity)requireActivity()).getSupportActionBar();
         textViewDescription = (TextView) view.findViewById(R.id.textViewEstimateDetailsDescription);
-        recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewEstimatePartsList);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        textViewTitle = (TextView) view.findViewById(R.id.textViewEstimateDetailsTitle);
+        textViewDateIntervention = (TextView) view.findViewById(R.id.textViewEstimateDetailsDate);
+        textViewClientFirstName = (TextView) view.findViewById(R.id.textViewEstimateDetailsClientFirstName);
+        textViewClientName = (TextView) view.findViewById(R.id.textViewEstimateDetailsClientName);
+        textViewClientPhone = (TextView) view.findViewById(R.id.textViewEstimateDetailsClientPhone);
+        tableLayout =  (TableLayout) view.findViewById(R.id.partTable);
         customizeFloatingActionButton();
         mViewModel.getIntervention(getArguments().getLong("interventionId")).observe(getViewLifecycleOwner(), this);
     }
@@ -103,7 +111,21 @@ public class EstimateDetailsFragment extends Fragment implements View.OnClickLis
     public void onChanged(Intervention intervention) {
         if (this.intervention == null)this.intervention = intervention;
         customizeActionBar();
+        textViewTitle.setText(intervention.getTitle());
+        textViewDateIntervention.setText(intervention.getDate());
+        textViewClientFirstName.setText(intervention.getClient().getFirstName());
+        textViewClientName.setText(intervention.getClient().getName());
+        textViewClientPhone.setText(intervention.getClient().getPhone());
         textViewDescription.setText(intervention.getDescription());
-        recyclerView.setAdapter(new PartsListAdapter(intervention.getPartsNeededs()));
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        for (PartsNeeded parts:intervention.getPartsNeededs()) {
+            TableRow row = (TableRow)inflater.inflate(R.layout.part_table_row, null);
+            ((TextView)row.findViewById(R.id.textViewNaming1)).setText(parts.getPart().getNaming());
+            ((TextView)row.findViewById(R.id.textViewQuantity1)).setText(String.valueOf(parts.getQuantity()));
+            ((TextView)row.findViewById(R.id.textViewLinePriceHT1)).setText(String.valueOf(parts.getPart().getBillPrice() * parts.getQuantity()));
+            ((TextView)row.findViewById(R.id.textViewLinePriceTTC1)).setText(String.valueOf(parts.getPart().getBillPrice() * parts.getQuantity()));
+            ((TextView)row.findViewById(R.id.textViewUnitPrice1)).setText(String.valueOf(parts.getPart().getBillPrice()));
+            tableLayout.addView(row);
+        }
     }
 }

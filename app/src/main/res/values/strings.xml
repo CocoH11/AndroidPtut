@@ -26,15 +26,13 @@
     <string name="parts_needed_text">Pièces nécessaires</string>
     <string name="client_text">Client:</string>
     <string name="button_estimate_validate_text">Valider</string>
-    <string name="adresse">Adresse</string>
-    <string name="defaultTextViewName">TextView</string>
-    <string name="string_code_postal">Code Postal :</string>
-    <string name="string_ville">Ville :</string>
-    <string name="text_tel">Tel :</string>
-    <string name="text_portable">Portable :</string>
-    <string name="text_references_internet">Références Internet :</string>
-    <string name="text_num_siret">N° Siret :</string>
-    <string name="text_reference">Référence :</string>
-    <string name="text_date">Date :</string>
-    <string name="text_num_client">N° Client :</string>
+    <string name="text_view_estimate_description_label">Description de l\'intervention</string>
+    <string name="text_view_estimate_prixHT_label">Prix Hors taxes (€)</string>
+    <string name="text_view_estimate_prixTTC_label">Prix Toutes taxes comprises (€)</string>
+
+    <string name="part_naming_label">Nom</string>
+    <string name="part_unit_price_label">Prix unitaire</string>
+    <string name="part_quantity_label">Qte</string>
+    <string name="part_HT_price">Prix HT</string>
+    <string name="part_TTC_price">Prix TTC</string>
 </resources>

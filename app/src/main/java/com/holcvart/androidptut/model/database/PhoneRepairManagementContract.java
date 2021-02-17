@@ -81,7 +81,7 @@ public final class PhoneRepairManagementContract {
 
         public static final String SQL_TABLE_LEFT_JOIN_ALL =
                 Client.TABLE_NAME + " LEFT JOIN " + TABLE_NAME + " ON (" + Client._ID + " = " + COLUMN_NAME_ID_CLIENT + ")"
-                        + "LEFT JOIN " + Need.TABLE_NAME + " ON (" + _ID + " = " + Need.COLUMN_NAME_ID_INTERVENTION + ")" +" LEFT JOIN " + Part.TABLE_NAME + " ON (" + Need._ID + " = " + Part._ID + ")";
+                        + "LEFT JOIN " + Need.TABLE_NAME + " ON (" + _ID + " = " + Need.COLUMN_NAME_ID_INTERVENTION + ")" +" LEFT JOIN " + Part.TABLE_NAME + " ON (" + Need.COLUMN_NAME_ID_PART + " = " + Part._ID + ")";
 
         public static final String SQL_ORDER_BY_DATE_DESC =
                 COLUMN_NAME_DATE + " DESC";
@@ -176,16 +176,20 @@ public final class PhoneRepairManagementContract {
         public final static String _ID=TABLE_NAME+"_"+BaseColumns._ID;
         public final static String COLUMN_NAME_QUANTITY=TABLE_NAME+"_"+"quantity";
         public final static String COLUMN_NAME_ID_INTERVENTION=TABLE_NAME+"_"+"idIntervention";
+        public final static String COLUMN_NAME_ID_PART = TABLE_NAME + "_" + "idPart";
 
         public final static String COLUMN_TYPE_QUANTITY = "INTEGER";
         public final static String COLUMN_TYPE_ID_INTERVENTION = "INTEGER";
+        public final static String COLUMN_TYPE_ID_PART = "INTEGER";
 
         public final static String SQL_CREATE_TABLE=
                 "CREATE TABLE "+TABLE_NAME+"("+
-                        _ID+" INTEGER PRIMARY KEY AUTOINCREMENT,"+
+                        _ID+" INTEGER PRIMARY KEY, "+
                         COLUMN_NAME_ID_INTERVENTION+" " + COLUMN_TYPE_ID_INTERVENTION + ","+
+                        COLUMN_NAME_ID_PART + " " + COLUMN_TYPE_ID_PART + "," +
                         COLUMN_NAME_QUANTITY+" " + COLUMN_TYPE_QUANTITY + ","+
-                        "UNIQUE("+_ID+","+COLUMN_NAME_ID_INTERVENTION+"),"+
+                        "UNIQUE(" + COLUMN_NAME_ID_PART + "," + COLUMN_NAME_ID_INTERVENTION + ")," +
+                        //"PRIMARY KEY(" + _ID + "," + COLUMN_NAME_ID_INTERVENTION + ")," +
                         "CONSTRAINT "+TABLE_NAME+"_"+Part.TABLE_NAME+"_FK FOREIGN KEY ("+_ID+")"+
                         "REFERENCES " + Part.TABLE_NAME+"("+Part._ID+"),"+
                         "CONSTRAINT "+TABLE_NAME+"_"+Intervention.TABLE_NAME+"_FK FOREIGN KEY ("+COLUMN_NAME_ID_INTERVENTION+")"+

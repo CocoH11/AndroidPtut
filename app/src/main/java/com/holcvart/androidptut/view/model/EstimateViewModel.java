@@ -21,6 +21,7 @@ import static com.holcvart.androidptut.model.database.PhoneRepairManagementContr
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_DESCRIPTION;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_IS_VALID;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.COLUMN_NAME_TITLE;
+import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.SQL_ORDER_BY_DATE_DESC;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention.SQL_WHERE;
 import static com.holcvart.androidptut.model.database.PhoneRepairManagementContract.Intervention._ID;
 
@@ -48,7 +49,8 @@ public class EstimateViewModel extends AndroidViewModel {
         String[] columns = new String[]{_ID, COLUMN_NAME_TITLE, COLUMN_NAME_DATE, COLUMN_NAME_DESCRIPTION};
         String[] selectionArgs = new String[]{String.valueOf(0)};
         String selection = SQL_WHERE(new String[]{COLUMN_NAME_IS_VALID});
-        interventionRepository.find2(entities, columns, selection, selectionArgs, null);
+        String order = SQL_ORDER_BY_DATE_DESC;
+        interventionRepository.find2(entities, columns, selection, selectionArgs, order);
         List<Intervention> newInterventions = (List<Intervention>)(List<?>)entities;
         interventions.setValue(newInterventions);
     }

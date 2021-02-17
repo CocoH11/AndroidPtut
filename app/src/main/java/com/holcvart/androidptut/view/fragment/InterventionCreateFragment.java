@@ -14,10 +14,8 @@ import androidx.navigation.Navigation;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,7 +23,6 @@ import com.holcvart.androidptut.MainActivity;
 import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.entity.Intervention;
-import com.holcvart.androidptut.view.model.ClientCreateViewModel;
 import com.holcvart.androidptut.view.model.InterventionCreateViewModel;
 
 import java.util.List;
@@ -47,7 +44,7 @@ public class InterventionCreateFragment extends Fragment implements Observer<Int
         actionBar = ((MainActivity)requireActivity()).getSupportActionBar();
         floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
         mViewModel = new ViewModelProvider(this).get(InterventionCreateViewModel.class);
-        return inflater.inflate(R.layout.intervention_create_fragment, container, false);
+        return inflater.inflate(R.layout.estimate_create_fragment, container, false);
     }
 
     @Override

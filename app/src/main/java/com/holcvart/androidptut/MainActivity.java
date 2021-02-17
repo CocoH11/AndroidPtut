@@ -1,10 +1,13 @@
 package com.holcvart.androidptut;
 
+import android.app.AlertDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -18,6 +21,7 @@ import com.holcvart.androidptut.model.repository.ClientRepository;
 import com.holcvart.androidptut.model.repository.InterventionRepository;
 
 import androidx.navigation.NavController;
+import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -34,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration mAppBarConfiguration;
     private SQLiteDatabase database;
     private FloatingActionButton floatingActionButton;
+    private Button barSettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        barSettingsButton = findViewById(R.id.action_settings);
+        barSettingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this,"Test", Toast.LENGTH_LONG).show();
+            }
+        });
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

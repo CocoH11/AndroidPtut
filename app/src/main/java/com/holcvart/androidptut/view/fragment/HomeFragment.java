@@ -1,5 +1,8 @@
 package com.holcvart.androidptut.view.fragment;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -37,9 +40,27 @@ public class HomeFragment extends Fragment {
                 textView.setText(s);
             }
         });
+        FILE_NAME_SHARED_PREFERENCES = getString(R.string.sharedPreferencesFileName);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences(FILE_NAME_SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
+        if (!sharedPreferences.getBoolean("isFirstTime",false)){
+            new AlertDialog.Builder(getContext())
+                    .setTitle("Première ouverture de l'application")
+                    .setMessage("Voulez-vous remplir les données d'entreprise maintenant dans les paramètres")
 
+                    .setPositiveButton("Oui", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Bundle bundle = new Bundle();
+                            Navigation.findNavController(root).navigate(R.id.action_nav_home_to_nav_settings,bundle);
+                        }
+                    })
 
+                    // A null listener allows the button to dismiss the dialog and take no further action.
+                    .setNegativeButton("Non", null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+
+        }
         return root;
     }
 

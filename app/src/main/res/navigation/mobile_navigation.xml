@@ -9,7 +9,11 @@
         android:id="@+id/nav_home"
         android:name="com.holcvart.androidptut.view.fragment.HomeFragment"
         android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_settings"
+            app:destination="@id/settingsFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/nav_client"
@@ -22,6 +26,9 @@
         <action
             android:id="@+id/action_nav_client_to_client_create"
             app:destination="@id/nav_client_create" />
+        <action
+            android:id="@+id/action_nav_client_to_nav_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
 
     <fragment
@@ -35,12 +42,19 @@
         <action
             android:id="@+id/action_nav_estimate_to_nav_estimate_create"
             app:destination="@id/nav_estimate_create" />
+        <action
+            android:id="@+id/action_nav_estimate_to_nav_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_order"
         android:name="com.holcvart.androidptut.view.fragment.OrderFragment"
         android:label="@string/menu_order"
-        tools:layout="@layout/order_fragment" />
+        tools:layout="@layout/order_fragment" >
+        <action
+            android:id="@+id/action_nav_order_to_nav_settings"
+            app:destination="@id/settingsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/nav_intervention"
         android:name="com.holcvart.androidptut.view.fragment.InterventionFragment"
@@ -52,6 +66,9 @@
         <action
             android:id="@+id/action_nav_intervention_to_nav_intervention_create"
             app:destination="@id/nav_intervention_create" />
+        <action
+            android:id="@+id/action_nav_intervention_to_nav_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_client_details"
@@ -67,6 +84,9 @@
         <action
             android:id="@+id/action_nav_client_details_to_nav_client_create"
             app:destination="@id/nav_client_create" />
+        <action
+            android:id="@+id/action_nav_client_details_to_nav_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_intervention_details"
@@ -79,6 +99,9 @@
         <action
             android:id="@+id/action_nav_intervention_details_to_nav_intervention_create"
             app:destination="@id/nav_intervention_create" />
+        <action
+            android:id="@+id/action_nav_intervention_details_to_nav_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_client_create"
@@ -88,6 +111,9 @@
         <action
             android:id="@+id/action_nav_client_create_to_nav_client_details"
             app:destination="@id/nav_client_details" />
+        <action
+            android:id="@+id/action_nav_client_create_to_nav_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_intervention_create"
@@ -97,6 +123,9 @@
         <action
             android:id="@+id/action_nav_intervention_create_to_nav_intervention_details"
             app:destination="@id/nav_intervention_details" />
+        <action
+            android:id="@+id/action_nav_intervention_create_to_nav_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_estimate_details"
@@ -109,6 +138,9 @@
         <action
             android:id="@+id/action_nav_estimate_details_to_nav_estimate"
             app:destination="@id/nav_estimate" />
+        <action
+            android:id="@+id/action_nav_estimate_details_to_nav_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/nav_estimate_create"
@@ -118,5 +150,12 @@
         <action
             android:id="@+id/action_nav_estimate_create_to_nav_estimate_details"
             app:destination="@id/nav_estimate_details" />
+        <action
+            android:id="@+id/action_nav_estimate_create_to_nav_settings"
+            app:destination="@id/settingsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.holcvart.androidptut.view.fragment.SettingsFragment"
+        android:label="SettingsFragment" />
 </navigation>

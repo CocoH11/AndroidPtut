@@ -99,7 +99,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             }
             editor.apply();
         }else {
-            Toast.makeText(getApplicationContext(), "Il manque des informations, veuillez remplir tous les champs de text", Toast.LENGTH_LONG);
+            Toast.makeText(getApplicationContext(), "Il manque des informations, veuillez remplir tous les champs de text", Toast.LENGTH_LONG).show();
         }
 
 

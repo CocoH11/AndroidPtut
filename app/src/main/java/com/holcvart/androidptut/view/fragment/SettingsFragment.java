@@ -41,13 +41,13 @@ public class SettingsFragment extends Fragment {
         customizeActionBar();
         View root = inflater.inflate(R.layout.settings_fragment, container, false);
         onConfigurationChanged(getActivity().getResources().getConfiguration());
-        buttonSaveSettings.findViewById(R.id.buttonSettingEntrepriseSave);
-        buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveDataApplication(v);
-            }
-        });
+//        buttonSaveSettings.findViewById(R.id.buttonSettingEntrepriseSave);
+//        buttonSaveSettings.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                saveDataApplication(v);
+//            }
+//        });
         return root;
     }
 

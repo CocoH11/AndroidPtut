@@ -3,8 +3,10 @@ package com.holcvart.androidptut;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -17,6 +19,7 @@ import com.holcvart.androidptut.model.entity.Part;
 import com.holcvart.androidptut.model.repository.ClientRepository;
 import com.holcvart.androidptut.model.repository.InterventionRepository;
 
+import androidx.annotation.NonNull;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -29,7 +32,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private SQLiteDatabase database;
@@ -70,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        menu.findItem(R.id.action_settings).setOnMenuItemClickListener(this);
         return true;
     }
 
@@ -87,4 +91,11 @@ public class MainActivity extends AppCompatActivity {
     public FloatingActionButton getFloatingActionButton() {
         return floatingActionButton;
     }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        Toast.makeText(getBaseContext(), "You just clicked on settings menu item", (int)2).show();
+        return true;
+    }
+
 }

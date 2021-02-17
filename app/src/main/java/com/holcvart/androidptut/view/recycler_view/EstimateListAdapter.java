@@ -38,7 +38,6 @@ public class EstimateListAdapter extends RecyclerView.Adapter{
         View.OnClickListener clickedListener = new EstimateItemOnClickListener(position, estimateFragment);
         ((EstimateRecyclerViewHolder)holder).itemView.setOnClickListener(clickedListener);
         ((EstimateRecyclerViewHolder)holder).itemView.findViewById(R.id.buttonEstimateValidate).setOnClickListener(clickedListener);
-
     }
 
     @Override

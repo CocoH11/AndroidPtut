@@ -81,6 +81,7 @@ public class EstimateDetailsFragment extends Fragment implements View.OnClickLis
     }
 
     private void customizeFloatingActionButton(){
+        floatingActionButton.setImageResource(android.R.drawable.ic_menu_edit);
         floatingActionButton.setOnClickListener(this);
     }
 

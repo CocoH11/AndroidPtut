@@ -1,27 +1,18 @@
 package com.holcvart.androidptut;
 
-import android.app.AlertDialog;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.holcvart.androidptut.model.database.PhoneRepairManagementDBHelper;
-import com.holcvart.androidptut.model.entity.Client;
-import com.holcvart.androidptut.model.entity.Entity;
-import com.holcvart.androidptut.model.entity.Intervention;
-import com.holcvart.androidptut.model.entity.Part;
-import com.holcvart.androidptut.model.repository.ClientRepository;
-import com.holcvart.androidptut.model.repository.InterventionRepository;
 
 import androidx.navigation.NavController;
-import androidx.navigation.NavHostController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
@@ -29,16 +20,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MenuItem.OnMenuItemClickListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private SQLiteDatabase database;
     private FloatingActionButton floatingActionButton;
-    private Button barSettingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,13 +36,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        barSettingsButton = findViewById(R.id.action_settings);
-//        barSettingsButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Toast.makeText(MainActivity.this,"Test", Toast.LENGTH_LONG).show();
-//            }
-//        });
         floatingActionButton = findViewById(R.id.fab);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_client, R.id.nav_estimate, R.id.nav_intervention, R.id.nav_order)
+                R.id.nav_home, R.id.nav_client, R.id.nav_intervention, R.id.nav_estimate, R.id.nav_order)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
@@ -82,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+        menu.findItem(R.id.action_settings).setOnMenuItemClickListener(this);
         return true;
     }
 
@@ -99,4 +79,11 @@ public class MainActivity extends AppCompatActivity {
     public FloatingActionButton getFloatingActionButton() {
         return floatingActionButton;
     }
+
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        Toast.makeText(getBaseContext(), "You just clicked on settings menu item", (int)2).show();
+        return true;
+    }
+
 }

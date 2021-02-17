@@ -1,6 +1,9 @@
 package com.holcvart.androidptut.view.fragment;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.ColorFilter;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -83,6 +86,7 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
     }
 
     private void customizeFloatingActionButton(){
+        floatingActionButton.setImageResource(android.R.drawable.ic_menu_edit);
         floatingActionButton.setOnClickListener(this);
     }
 

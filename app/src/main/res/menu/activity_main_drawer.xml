@@ -14,6 +14,7 @@
             android:title="@string/menu_client" />
         <item
             android:id="@+id/nav_intervention"
+            android:icon="@drawable/ic_baseline_construction_24"
             android:title="@string/menu_intervention" />
         <item
             android:id="@+id/nav_estimate"

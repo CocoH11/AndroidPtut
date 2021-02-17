@@ -35,4 +35,18 @@
     <string name="part_quantity_label">Qte</string>
     <string name="part_HT_price">Prix HT</string>
     <string name="part_TTC_price">Prix TTC</string>
+
+
+
+    <string name="adresse">Adresse :</string>
+    <string name="defaultTextViewName">TextView</string>
+    <string name="string_code_postal">Code Postal :</string>
+    <string name="string_ville">Ville :</string>
+    <string name="text_tel">Tel :</string>
+    <string name="text_portable">Portable :</string>
+    <string name="text_references_internet">Références Internet :</string>
+    <string name="text_num_siret">N° Siret :</string>
+    <string name="mail_entreprise">Mail :</string>
+    <string name="sauvegarder">Sauvegarder</string>
+    <string name="name">Nom :</string>
 </resources>

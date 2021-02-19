@@ -61,6 +61,7 @@ public class EstimateFragment extends Fragment implements View.OnClickListener, 
     public void customizeFloatingActionButton(){
         floatingActionButton.setImageResource(android.R.drawable.ic_input_add);
         floatingActionButton.setOnClickListener(this);
+        floatingActionButton.show();
     }
 
     public void customizeActionBar(){

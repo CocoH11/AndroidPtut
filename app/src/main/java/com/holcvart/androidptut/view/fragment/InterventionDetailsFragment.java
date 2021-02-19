@@ -88,6 +88,7 @@ public class InterventionDetailsFragment extends Fragment implements View.OnClic
     private void customizeFloatingActionButton(){
         floatingActionButton.setImageResource(android.R.drawable.ic_menu_edit);
         floatingActionButton.setOnClickListener(this);
+        floatingActionButton.hide();
     }
 
     private void customizeActionBar(){

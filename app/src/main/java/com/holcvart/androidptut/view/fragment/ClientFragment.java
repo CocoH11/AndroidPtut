@@ -49,6 +49,7 @@ public class ClientFragment extends Fragment implements Observer<List<Client>>{
                 Navigation.findNavController(getView()).navigate(R.id.action_nav_client_to_client_create);
             }
         });
+        floatingActionButton.show();
     }
 
     public void navToDetailedView(View view, int position) {

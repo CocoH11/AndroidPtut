@@ -34,6 +34,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
         floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
+        customizeFloatingActionButton();
         View root = inflater.inflate(R.layout.fragment_home, container, false);
         final TextView textView = root.findViewById(R.id.text_home);
         homeViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
@@ -65,12 +66,12 @@ public class HomeFragment extends Fragment {
     }
 
     private void customizeFloatingActionButton(){
-        floatingActionButton.setImageResource(android.R.drawable.ic_input_add);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(getContext(), "Replace with your own action", (int) 2).show();
             }
         });
+        floatingActionButton.hide();
     }
 }

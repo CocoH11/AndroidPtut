@@ -69,6 +69,7 @@ public class InterventionCreateFragment extends Fragment implements Observer<Int
 
     private void customizeActionBar(){
         actionBar.setTitle("Nouvelle intervention");
+        floatingActionButton.show();
     }
     private void customizeFloatingActionButton(){
         floatingActionButton.setImageResource(android.R.drawable.ic_media_next);

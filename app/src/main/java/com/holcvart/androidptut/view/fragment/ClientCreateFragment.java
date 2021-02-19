@@ -78,6 +78,7 @@ public class ClientCreateFragment extends Fragment implements Observer<Client> {
                 navToDetailedView(getView());
             }
         });
+        floatingActionButton.show();
     }
 
     public void navToDetailedView(View view) {

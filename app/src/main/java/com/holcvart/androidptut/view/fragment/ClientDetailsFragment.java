@@ -97,6 +97,7 @@ public class ClientDetailsFragment extends Fragment implements Observer<Client>,
                 navToUpdateView(getView());
             }
         });
+        floatingActionButton.show();
     }
 
     private void customizeActionBar(){

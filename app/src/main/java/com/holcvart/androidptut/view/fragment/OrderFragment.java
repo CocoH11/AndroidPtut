@@ -31,6 +31,7 @@ public class OrderFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         floatingActionButton = ((MainActivity)requireActivity()).getFloatingActionButton();
+        customizeFloatingActionButton();
         return inflater.inflate(R.layout.order_fragment, container, false);
     }
 

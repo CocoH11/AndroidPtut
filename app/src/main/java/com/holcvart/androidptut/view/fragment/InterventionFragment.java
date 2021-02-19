@@ -57,6 +57,7 @@ public class InterventionFragment extends Fragment implements View.OnClickListen
     private void customizeFloatingActionButton(){
         floatingActionButton.setImageResource(android.R.drawable.ic_input_add);
         floatingActionButton.setOnClickListener(this);
+        floatingActionButton.hide();
     }
 
     public void navToDetailedView(View view, int position){

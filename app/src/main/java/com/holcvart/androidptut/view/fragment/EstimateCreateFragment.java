@@ -32,6 +32,7 @@ import com.holcvart.androidptut.R;
 import com.holcvart.androidptut.model.entity.Client;
 import com.holcvart.androidptut.model.entity.Intervention;
 import com.holcvart.androidptut.model.entity.Part;
+import com.holcvart.androidptut.model.entity.PartsNeeded;
 import com.holcvart.androidptut.view.model.InterventionCreateViewModel;
 
 import java.util.List;
@@ -95,6 +96,7 @@ public class EstimateCreateFragment extends Fragment implements Observer<Interve
     private void customizeFloatingActionButton(){
         floatingActionButton.setImageResource(android.R.drawable.ic_media_next);
         floatingActionButton.setOnClickListener(this);
+        floatingActionButton.show();
     }
 
     public void navToDetailedView(View view) {
@@ -121,6 +123,13 @@ public class EstimateCreateFragment extends Fragment implements Observer<Interve
     public void addPartTabLine(long id, int quantity){
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         TableRow row = (TableRow) inflater.inflate(R.layout.estimate_create_parts_table_row, null);
+        if (id == -1){
+            PartsNeeded parts = new PartsNeeded();
+            parts.setQuantity(1);
+            parts.setPart(mParts.get(0));
+            parts.setIntervention(mIntervention);
+            mIntervention.getPartsNeededs().add(parts);
+        }
         Spinner spinner = (Spinner)row.findViewById(R.id.partSpinner);
         spinner.setAdapter(new SpinnerPartsAdapter(getContext(), R.layout.adapter_item_part, mParts));
         spinner.setOnItemSelectedListener(this);
